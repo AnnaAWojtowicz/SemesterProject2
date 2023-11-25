@@ -4,6 +4,7 @@
   "version": "0.0.6",
   "type": "module",
   "scripts": {
+    "test": "jest",
     "lint": "eslint src/**/*.js",
     "lint-fix": "eslint src/**/*.js --cache --fix",
     "dev": "vite",
