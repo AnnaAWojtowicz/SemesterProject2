@@ -1,4 +1,5 @@
 import { registerNewUser } from "../../../js/api/auth/register";
+import { logInUser } from "../../../js/api/auth/login";
 
 describe("AuthTest", () => {
   it.skip("register new user", async () => {
@@ -14,6 +15,14 @@ describe("AuthTest", () => {
     } catch (error) {
       console.log(error);
     }
+  });
+  it.skip("log in user", async () => {
+    const userData = await logInUser(
+      "bng7ctddzki@stud.noroff.no",
+      "JegLikerKrem",
+    );
+    console.log(userData);
+    expect(userData.accessToken).toBeTruthy();
   });
 });
 
