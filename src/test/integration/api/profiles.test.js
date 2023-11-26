@@ -1,4 +1,4 @@
-import { getProfiles } from "../../../js/api/profiles/read";
+import { getProfiles, getProfile } from "../../../js/api/profiles/read";
 import { logInUser } from "../../../js/api/auth/login";
 
 describe("profilesTests", () => {
@@ -8,6 +8,14 @@ describe("profilesTests", () => {
   });
   it("list all profiles", async () => {
     const profiles = await getProfiles(userInfo.accessToken);
-    console.log(profiles);
+    // console.log(profiles);
+    expect(profiles).toBeTruthy();
+    expect(profiles.length).toBeGreaterThan(0);
+  });
+  it("list profile", async () => {
+    const profile = await getProfile(userInfo.accessToken, userInfo.name);
+    // console.log(profile);
+    expect(profile).toBeTruthy();
+    expect(profile.name).toMatch(userInfo.name);
   });
 });
