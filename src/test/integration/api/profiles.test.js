@@ -1,6 +1,7 @@
 import { getProfiles, getProfile } from "../../../js/api/profiles/read";
 import { logInUser } from "../../../js/api/auth/login";
 import { updateMyAvatar } from "../../../js/api/profiles/updateAvatar";
+import { getMyListings } from "../../../js/api/profiles/listings";
 
 describe("profilesTests", () => {
   let userInfo = undefined;
@@ -27,5 +28,12 @@ describe("profilesTests", () => {
     );
     expect(updatedUserAvatar).toBeTruthy();
     expect(updatedUserAvatar.avatar).toMatch(userInfo.avatar);
+  });
+  it("shows profile's listings", async () => {
+    const userListings = await getMyListings(
+      userInfo.accessToken,
+      userInfo.name,
+    );
+    expect(userListings).toBeTruthy();
   });
 });
