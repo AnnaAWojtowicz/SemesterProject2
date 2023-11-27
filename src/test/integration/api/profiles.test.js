@@ -1,5 +1,6 @@
 import { getProfiles, getProfile } from "../../../js/api/profiles/read";
 import { logInUser } from "../../../js/api/auth/login";
+import { updateMyAvatar } from "../../../js/api/profiles/updateAvatar";
 
 describe("profilesTests", () => {
   let userInfo = undefined;
@@ -17,5 +18,14 @@ describe("profilesTests", () => {
     // console.log(profile);
     expect(profile).toBeTruthy();
     expect(profile.name).toMatch(userInfo.name);
+  });
+  it("changes avatar", async () => {
+    const updatedUserAvatar = await updateMyAvatar(
+      userInfo.accessToken,
+      userInfo.name,
+      userInfo.avatar,
+    );
+    expect(updatedUserAvatar).toBeTruthy();
+    expect(updatedUserAvatar.avatar).toMatch(userInfo.avatar);
   });
 });
