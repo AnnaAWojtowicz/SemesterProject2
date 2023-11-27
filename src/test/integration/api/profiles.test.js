@@ -2,6 +2,8 @@ import { getProfiles, getProfile } from "../../../js/api/profiles/read";
 import { logInUser } from "../../../js/api/auth/login";
 import { updateMyAvatar } from "../../../js/api/profiles/updateAvatar";
 import { getMyListings } from "../../../js/api/profiles/listings";
+import { getMyBids } from "../../../js/api/profiles/bids";
+import { getMyCredits } from "../../../js/api/profiles/credits";
 
 describe("profilesTests", () => {
   let userInfo = undefined;
@@ -31,6 +33,17 @@ describe("profilesTests", () => {
   });
   it("shows profile's listings", async () => {
     const userListings = await getMyListings(
+      userInfo.accessToken,
+      userInfo.name,
+    );
+    expect(userListings).toBeTruthy();
+  });
+  it("shows profile's bids", async () => {
+    const userListings = await getMyBids(userInfo.accessToken, userInfo.name);
+    expect(userListings).toBeTruthy();
+  });
+  it("shows profile's credits", async () => {
+    const userListings = await getMyCredits(
       userInfo.accessToken,
       userInfo.name,
     );
