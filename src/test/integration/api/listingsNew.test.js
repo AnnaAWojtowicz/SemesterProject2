@@ -3,6 +3,7 @@ import { logInUser } from "../../../js/api/auth/login";
 import { getListingById } from "../../../js/api/listings/listingID";
 import { updateListing } from "../../../js/api/listings/update";
 import { newBid } from "../../../js/api/listings/bid";
+import { deleteListing } from "../../../js/api/listings/delete";
 
 describe("ListingTests", () => {
   //  const endsAtDate = new Date(endsAt).toLocaleDateString();
@@ -57,6 +58,7 @@ describe("ListingTests", () => {
       // console.log("updated auction data", updatedAuctionData);
       expect(updatedAuctionData.title).toMatch(newTitle);
     });
+
     it("place new bid", async () => {
       const user2 = await logInUser(
         "bruker3@stud.noroff.no",
@@ -69,6 +71,14 @@ describe("ListingTests", () => {
         (bid) => bid.bidderName === "bruker3",
       );
       expect(bruker3Bid.bidderName).toMatch("bruker3");
+    });
+  });
+
+  describe("deletes listing", () => {
+    it("deletes listing", async () => {
+      const deleteResult = await deleteListing(userInfo.accessToken, listingId);
+      console.log(deleteResult);
+      expect(deleteResult).toBe(true);
     });
   });
 });
