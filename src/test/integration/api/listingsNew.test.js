@@ -1,9 +1,11 @@
-import { newListing } from "../../../js/api/listings/listingsNew";
+import { newListing } from "../../../js/api/listings/listingNew";
 import { logInUser } from "../../../js/api/auth/login";
-import { getListingsById } from "../../../js/api/listings/listingsID";
+import { getListingById } from "../../../js/api/listings/listingID";
+import { updateListing } from "../../../js/api/listings/update";
 
 describe("ListingTests", () => {
   //  const endsAtDate = new Date(endsAt).toLocaleDateString();
+  let listing = undefined;
   let listingId = undefined;
   let userInfo = undefined;
 
@@ -35,12 +37,23 @@ describe("ListingTests", () => {
   });
   describe("listings with id", () => {
     it("get listing by id", async () => {
-      const listing = await getListingsById(listingId);
-      console.log("get listing by ID", listing);
+      listing = await getListingById(listingId);
+      // console.log("get listing by ID", listing);
       expect(listing.id).toMatch(listingId);
     });
 
-    // it("", async () => {});
+    it("update listing", async () => {
+      const newTitle = "a beautiful mug";
+      const updatedAuctionData = await updateListing(
+        userInfo.accessToken,
+        listing.id,
+        newTitle,
+        listing.description,
+        listing.tags,
+        listing.media,
+      );
+      console.log("updated auction data", updatedAuctionData);
+    });
     // it("", async () => {})
   });
 });
