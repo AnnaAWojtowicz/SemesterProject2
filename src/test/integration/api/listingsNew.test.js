@@ -2,6 +2,7 @@ import { newListing } from "../../../js/api/listings/listingNew";
 import { logInUser } from "../../../js/api/auth/login";
 import { getListingById } from "../../../js/api/listings/listingID";
 import { updateListing } from "../../../js/api/listings/update";
+import { newBid } from "../../../js/api/listings/bid";
 
 describe("ListingTests", () => {
   //  const endsAtDate = new Date(endsAt).toLocaleDateString();
@@ -35,6 +36,7 @@ describe("ListingTests", () => {
       listingId = auctionData.id;
     });
   });
+
   describe("listings with id", () => {
     it("get listing by id", async () => {
       listing = await getListingById(listingId);
@@ -52,8 +54,21 @@ describe("ListingTests", () => {
         listing.tags,
         listing.media,
       );
-      console.log("updated auction data", updatedAuctionData);
+      // console.log("updated auction data", updatedAuctionData);
+      expect(updatedAuctionData.title).toMatch(newTitle);
     });
-    // it("", async () => {})
+    it("place new bid", async () => {
+      const user2 = await logInUser(
+        "bruker3@stud.noroff.no",
+        "JegLikerÅBrukePenger",
+      );
+      const amount = 25;
+      const newBidResponse = await newBid(user2.accessToken, listingId, amount);
+      // console.log("new bid response", newBidResponse);
+      const bruker3Bid = newBidResponse.bids.find(
+        (bid) => bid.bidderName === "bruker3",
+      );
+      expect(bruker3Bid.bidderName).toMatch("bruker3");
+    });
   });
 });
