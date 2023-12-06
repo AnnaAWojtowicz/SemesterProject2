@@ -1,35 +1,63 @@
-$primaryBackground: #f8f0e5;
-$secondaryBackground: #eadbc8;
-$tertiaryBackground: #dac0a3;
-$details: #102c57;
-$successActive: #606c5d;
-$sucessInactive: #aec2a7;
-$failActive: #9a3b3b;
-$failInactive: #d35050;
+// $primaryBackground: #f8f0e5;
+$primaryBackground: #f7f4e4;
+$secondaryBackground: #cac0a8;
+$tertiaryBackground: #a79469;
+// $tertiaryBackground: #dac0a3;
+
+// $details: #102c57;
+$details: #0b384b;
+$secondaryDetail: #744815;
+
+$successActive: #2f440f;
+// $sucessInactive: #aec2a7;
+$failActive: #78081d;
+// $failInactive: #d35050;
+
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400&family=Marcellus&display=swap");
 
 header {
-  background-color: $tertiaryBackground;
+  background-color: $secondaryDetail;
+}
+.border {
+  border-width: 1px;
+  border-style: solid;
+  border-color: $details !important;
 }
 
 .border-bottom {
-  border-bottom-width: 1px !important;
-  border-bottom-style: solid !important;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
   border-bottom-color: $details !important;
 }
 
 body {
-  background-color: $secondaryBackground !important;
-  color: $primaryBackground;
+  font-family: "Manrope", sans-serif;
+  background-color: $secondaryBackground;
+  // color: $primaryBackground;
+}
+
+.form-control {
+  background-color: $primaryBackground !important;
+}
+
+.modal-content {
+  background-color: $secondaryBackground;
+}
+
+h3 {
+  font-family: "Marcellus", serif;
 }
 
 .btn {
-  color: $primaryBackground !important;
-  background-color: $details !important;
-  border-color: $primaryBackground !important;
+  color: $primaryBackground;
+  background-color: $details;
+  border-color: $primaryBackground;
+  font-family: "Manrope", sans-serif;
+  font-weight: 300;
 }
 
 .carousel-item {
-  border-color: $details !important;
+  border-color: $details;
   img {
     object-fit: cover;
     height: 500px;
@@ -38,7 +66,15 @@ body {
 
 .card-body,
 .list-group-item {
-  background-color: $primaryBackground !important;
+  background-color: $primaryBackground;
+}
+
+footer {
+  i {
+    color: $details;
+    display: inline-block;
+    font-size: 1.5rem;
+  }
 }
 
 // :root {
