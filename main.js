@@ -11,9 +11,23 @@ import "./style.scss";
 
 import { getListings } from "./src/js/api/listings/read";
 import { getListingById } from "./src/js/api/listings/listingID";
+import { logInUser } from "./src/js/api/auth/login";
 
 let params = new URLSearchParams(window.location.search);
-let listingsId = params.get("listingsId"); // replace 'myParam' with your parameter name
+let listingsId = params.get("listingsId");
+
+// This event listener gets the values of email address and password when the user logs in
+document.getElementById("submitBtn1").addEventListener("click", (event) => {
+  event.preventDefault();
+  const formLogin = document.getElementById("formLogin");
+  const mailLogin = formLogin.elements[0];
+  const passwordLogin = formLogin.elements[1];
+
+  const userEmail = mailLogin.value;
+  const userPassword = passwordLogin.value;
+
+  logInUser(userEmail, userPassword);
+});
 
 if (listingsId !== null) {
   showAuctionsCardDetails(listingsId);
