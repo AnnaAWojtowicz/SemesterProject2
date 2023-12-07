@@ -23,6 +23,7 @@ if (listingsId !== null) {
 }
 
 let containerHtmlCard = document.getElementById("singleCard");
+let containerHtmlCardDetails = document.getElementById("singleCardDetails");
 
 // window.onload = showAuctionsCards();
 
@@ -39,6 +40,7 @@ async function showAuctionsCards() {
     let formattedTime = new Date(cards[i].updated).toLocaleTimeString();
 
     containerHtmlCard.innerHTML += `
+        
   <div class="col">
             <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="
                     background-image: url(${cards[i].media[0]});
@@ -67,17 +69,15 @@ async function showAuctionsCards() {
  * Gets details of an auction and shows it as single card without a possibility to do the bid
  */
 async function showAuctionsCardDetails(id) {
-  // document.getElementById("allCards").style.display = "none";
-  // document.getElementById("singleCardDetails").style.display = "block";
-  // document.getElementById("bidBtn").style.display = "none";
   const cardDetails = await getListingById(id);
 
-  containerHtmlCard.innerHTML = "";
+  containerHtmlCardDetails.innerHTML = "";
 
   let formattedDateEnd = new Date(cardDetails.endsAt).toLocaleDateString();
   let formattedTimeEnd = new Date(cardDetails.endsAt).toLocaleTimeString();
 
-  containerHtmlCard.innerHTML += `
+  containerHtmlCardDetails.innerHTML += `
+ 
         <div class="card rounded-top-4 border">
         <div class="card-img-top border-bottom">
          
@@ -132,5 +132,6 @@ async function showAuctionsCardDetails(id) {
           <button type="button" class="btn" id="bidBtn">Place your Bid</button>
         </div>
       </div>
+   
       `;
 }
