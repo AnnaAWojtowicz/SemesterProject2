@@ -10,22 +10,33 @@ import "./style.scss";
 // import { setupCounter } from "./counter.js";
 
 import { getListings } from "./src/js/api/listings/read";
+import { getListingById } from "./src/js/api/listings/listingID";
+
+let params = new URLSearchParams(window.location.search);
+let listingsId = params.get("listingsId"); // replace 'myParam' with your parameter name
+
+if (listingsId !== null) {
+  showAuctionsCardDetails(listingsId);
+  console.log(listingsId);
+} else {
+  showAuctionsCards();
+}
 
 let containerHtmlCard = document.getElementById("singleCard");
 
-window.onload = showAuctionsCards();
+// window.onload = showAuctionsCards();
 
 /**
  * Shows cards with listings sent from API;
  */
 async function showAuctionsCards() {
+  document.getElementById("singleCardDetails").style.display = "none";
   const cards = await getListings();
 
   containerHtmlCard.innerHTML = "";
   for (let i = 0; i < cards.length; i++) {
     let formattedDate = new Date(cards[i].updated).toLocaleDateString();
     let formattedTime = new Date(cards[i].updated).toLocaleTimeString();
-    console.log(cards[i].media[0]);
 
     containerHtmlCard.innerHTML += `
   <div class="col">
@@ -38,7 +49,7 @@ async function showAuctionsCards() {
                 </h3>
                 <ul class="d-flex list-unstyled mt-auto">
                   <li class="me-auto">
-                    <button type="button" class="btn">About</button>
+                    <button type="button" class="btn aboutBtn" id="${cards[i].id}"><a href="?listingsId=${cards[i].id}">About</a></button>
                   </li>
                   <li class="d-flex align-items-center">
                     <i class="bi me-2 ms-2 bi-calendar3"></i>
@@ -50,4 +61,76 @@ async function showAuctionsCards() {
           </div>
   `;
   }
+}
+
+/**
+ * Gets details of an auction and shows it as single card without a possibility to do the bid
+ */
+async function showAuctionsCardDetails(id) {
+  // document.getElementById("allCards").style.display = "none";
+  // document.getElementById("singleCardDetails").style.display = "block";
+  // document.getElementById("bidBtn").style.display = "none";
+  const cardDetails = await getListingById(id);
+
+  containerHtmlCard.innerHTML = "";
+
+  let formattedDateEnd = new Date(cardDetails.endsAt).toLocaleDateString();
+  let formattedTimeEnd = new Date(cardDetails.endsAt).toLocaleTimeString();
+
+  containerHtmlCard.innerHTML += `
+        <div class="card rounded-top-4 border">
+        <div class="card-img-top border-bottom">
+         
+          <div id="carouselExampleIndicators" class="carousel slide">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner rounded-top-4">
+              <div class="carousel-item active">
+                <img src="${cardDetails.media[0]}" class="d-block w-100" alt="..." />
+              </div>
+              <div class="carousel-item">
+                <img src="${cardDetails.media[1]}" class="d-block w-100 carousel-img"
+                  alt="..." />
+              </div>
+              <div class="carousel-item">
+                <img src="${cardDetails.media[2]}" class="d-block w-100 carousel-img" alt="..." />
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+              data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+              data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <h5 class="card-title">${cardDetails.title}</h5>
+          <p class="card-text">
+          ${cardDetails.description}
+          </p>
+        </div>
+        <ul class="list-group list-group-flush">
+        <li class="list-group-item">Seller:  ${cardDetails.seller.name}</li>
+          <li class="list-group-item">Tags:  ${cardDetails.tags}</li>
+          <li class="list-group-item">Auction ends at: ${formattedDateEnd} ${formattedTimeEnd}</li>
+          <li class="list-group-item">Bids: ${cardDetails._count.bids}</li>
+        </ul>
+        <div class="card-body">
+          <button type="button" class="btn" id="backBtn">Back to Auctions</button>
+          <button type="button" class="btn" id="bidBtn">Place your Bid</button>
+        </div>
+      </div>
+      `;
 }
