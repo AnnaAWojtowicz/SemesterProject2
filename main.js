@@ -41,6 +41,8 @@ document
     );
     if (userData.name === userName) {
       window.location.reload();
+      document.getElementById("header1").style.display = "block";
+      document.getElementById("header2").style.display = "none";
     }
   });
 
@@ -59,6 +61,8 @@ document
     const userData = await logInUser(userEmail, userPassword);
     if (userData.email === userEmail) {
       window.location.reload();
+      document.getElementById("header1").style.display = "block";
+      document.getElementById("header2").style.display = "none";
     }
   });
 

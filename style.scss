@@ -15,8 +15,20 @@ $failActive: #78081d;
 
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400&family=Marcellus&display=swap");
 
+body {
+  font-family: "Manrope", sans-serif;
+  background-color: $secondaryBackground;
+  // color: $primaryBackground;
+}
+
 header {
   background-color: $secondaryDetail;
+  #header1 {
+    display: none;
+  }
+  #header2 {
+    display: block;
+  }
 }
 .border {
   border-width: 1px;
@@ -28,12 +40,6 @@ header {
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-bottom-color: $details !important;
-}
-
-body {
-  font-family: "Manrope", sans-serif;
-  background-color: $secondaryBackground;
-  // color: $primaryBackground;
 }
 
 .form-control {
