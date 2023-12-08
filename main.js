@@ -12,22 +12,55 @@ import "./style.scss";
 import { getListings } from "./src/js/api/listings/read";
 import { getListingById } from "./src/js/api/listings/listingID";
 import { logInUser } from "./src/js/api/auth/login";
+import { registerNewUser } from "./src/js/api/auth/register";
 
 let params = new URLSearchParams(window.location.search);
 let listingsId = params.get("listingsId");
 
-// This event listener gets the values of email address and password when the user logs in
-document.getElementById("submitBtn1").addEventListener("click", (event) => {
-  event.preventDefault();
-  const formLogin = document.getElementById("formLogin");
-  const mailLogin = formLogin.elements[0];
-  const passwordLogin = formLogin.elements[1];
+// Gets the values of name, email adress, password and avatar when user register
+document
+  .getElementById("submitBtn2")
+  .addEventListener("click", async (event) => {
+    event.preventDefault();
+    const formRegister = document.getElementById("formRegister");
+    const nameRegister = formRegister.elements[0];
+    const mailRegister = formRegister.elements[1];
+    const passwordRegister = formRegister.elements[2];
+    const avatarRegister = formRegister.elements[3];
 
-  const userEmail = mailLogin.value;
-  const userPassword = passwordLogin.value;
+    const userName = nameRegister.value;
+    const userEmail = mailRegister.value;
+    const userPassword = passwordRegister.value;
+    const userAvatar = avatarRegister.value;
 
-  logInUser(userEmail, userPassword);
-});
+    const userData = await registerNewUser(
+      userName,
+      userEmail,
+      userPassword,
+      userAvatar,
+    );
+    if (userData.name === userName) {
+      window.location.reload();
+    }
+  });
+
+// Gets the values of email address and password when the user logs in
+document
+  .getElementById("submitBtn1")
+  .addEventListener("click", async (event) => {
+    event.preventDefault();
+    const formLogin = document.getElementById("formLogin");
+    const mailLogin = formLogin.elements[0];
+    const passwordLogin = formLogin.elements[1];
+
+    const userEmail = mailLogin.value;
+    const userPassword = passwordLogin.value;
+
+    const userData = await logInUser(userEmail, userPassword);
+    if (userData.email === userEmail) {
+      window.location.reload();
+    }
+  });
 
 if (listingsId !== null) {
   showAuctionsCardDetails(listingsId);
@@ -91,7 +124,6 @@ async function showAuctionsCardDetails(id) {
   let formattedTimeEnd = new Date(cardDetails.endsAt).toLocaleTimeString();
 
   containerHtmlCardDetails.innerHTML += `
- 
         <div class="card rounded-top-4 border">
         <div class="card-img-top border-bottom">
          
@@ -146,6 +178,5 @@ async function showAuctionsCardDetails(id) {
           <button type="button" class="btn" id="bidBtn">Place your Bid</button>
         </div>
       </div>
-   
       `;
 }
