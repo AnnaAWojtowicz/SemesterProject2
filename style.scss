@@ -23,13 +23,27 @@ body {
 
 header {
   background-color: $secondaryDetail;
-  #header1 {
-    display: none;
-  }
-  #header2 {
-    display: block;
+}
+
+#header1 {
+  display: none;
+}
+
+#header2 {
+  display: block;
+}
+
+#usersCredits {
+  h5 {
+    margin-bottom: 0 !important;
+    color: $primaryBackground;
   }
 }
+
+#usersCardBody {
+  background-color: $primaryBackground;
+}
+
 .border {
   border-width: 1px;
   border-style: solid;
@@ -50,6 +64,7 @@ header {
   background-color: $secondaryBackground;
 }
 
+h1,
 h3 {
   font-family: "Marcellus", serif;
 }
@@ -73,6 +88,38 @@ h3 {
 .card-body,
 .list-group-item {
   background-color: $primaryBackground;
+}
+
+#profileImg {
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 0px;
+}
+
+@media (min-width: 768px) {
+  #profileImg {
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+}
+
+#cardBody {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 15px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 15px;
+}
+
+@media (min-width: 768px) {
+  #cardBody {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
 }
 
 footer {

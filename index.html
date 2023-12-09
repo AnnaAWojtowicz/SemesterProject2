@@ -9,7 +9,7 @@
   </head>
 
   <body>
-    <header class="p-3 mb-3 fixed-top" id="header1">
+    <header class="p-3 .border-bottom" id="header1">
       <div class="container">
         <div
           class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-center"
@@ -24,15 +24,10 @@
           /></a>
 
           <ul
-            class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
+            class="d-flex nav col-12 col-lg-auto me-lg-auto mb-2 align-items-baseline mb-md-0"
           >
-            <li>
-              <!--  <a href="#" class="nav-link px-2 link-body-emphasis">Auctions</a>
-          </li>
-          <li><a href="#" class="nav-link px-2 link-secondary">Overview</a></li>
-          <li><a href="#" class="nav-link px-2 link-body-emphasis">Inventory</a></li>
-          <li><a href="#" class="nav-link px-2 link-body-emphasis">Customers</a></li>
-          <li><a href="#" class="nav-link px-2 link-body-emphasis">Products</a></li>-->
+            <li class="px-4 justify-self-end" id="usersCredits">
+              <h5>Your credits: 1000</h5>
             </li>
           </ul>
 
@@ -91,11 +86,7 @@
           <ul
             class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
           >
-            <!-- <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">About</a></li>-->
+            <!-- <h5>Your credits: 1000</h5>-->
           </ul>
 
           <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
@@ -477,6 +468,38 @@
       </div>
     </main>
 
+    <!-- PROFILE CARD -->
+    <div class="container">
+      <div class="card mb-3 border rounded-4" id="usersCardBody">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img
+              src="./img/maksym-ostrozhynskyy-w6OniVDCfn0-unsplash.jpg"
+              class="img-fluid"
+              id="profileImg"
+              alt="..."
+            />
+          </div>
+          <div class="col-md-8">
+            <div class="card-body" id="cardBody">
+              <h1 class="card-title my-4">Kati-san</h1>
+              <h4 class="card-text my-4">Your Credits: 1000</h4>
+              <button class="btn btn-primary my-4 me-2" type="submit">
+                New Auction
+              </button>
+              <button class="btn btn-primary my-4 me-2" type="submit">
+                Your Bids
+              </button>
+              <button class="btn btn-primary my-4 me-2" type="submit">
+                Change Avatar
+              </button>
+              <!-- <button class="btn btn-primary my-4 me-3" type="submit">Change Password</button> -->
+              <p class="card-text"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Footer -->
     <section>
       <div class="container">
