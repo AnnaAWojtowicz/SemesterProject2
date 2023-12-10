@@ -109,7 +109,7 @@ async function showUserProfile(name) {
             <div class="card-body" id="cardBody">
               <h1 class="card-title my-4">${profile.name}</h1>
               <h4 class="card-text my-4">Your Credits: ${profile.credits}</h4>
-              <button class="btn btn-primary my-4 me-2" type="submit">
+              <button class="btn btn-primary my-4 me-2" type="submit" data-bs-toggle="modal" data-bs-target="#newAuctionModal">
                 New Auction
               </button>
               <button class="btn btn-primary my-4 me-2" type="submit">
@@ -193,7 +193,7 @@ function showUserCreditsHeader(profile) {
             <img src="${profile.avatar}" alt="mdo" width="32" height="32" class="rounded-circle" />
           </a>
           <ul class="dropdown-menu text-small">
-            <li><a class="dropdown-item" href="#">Your Auctions</a></li>
+            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#newAuctionModal">New Auction</a></li>
             <li><a class="dropdown-item" href="#">Your Bids</a></li>
             <li><a class="dropdown-item" href="./index.html?profileName=${profile.name}">Your Profile</a></li>
             <li>

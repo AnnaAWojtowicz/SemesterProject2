@@ -482,6 +482,106 @@
       </div>
     </main>
 
+    <!-- MODAL NEW AUCTION -->
+    <div
+      class="modal fade"
+      id="newAuctionModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title fs-5" id="exampleModalLabel">
+              Hi, what do you want to sell today?
+            </h2>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <form id="formPost">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >Name of the object</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleFormControlTextarea1"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlTextarea2" class="form-label"
+                  >Description</label
+                >
+                <textarea
+                  class="form-control"
+                  id="exampleFormControlTextarea2"
+                  rows="3"
+                ></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >Media (you can use max. 3 photos)</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleFormControlTextarea3"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlTextarea2" class="form-label"
+                  >Tags</label
+                >
+                <textarea
+                  class="form-control"
+                  id="exampleFormControlTextarea4"
+                  rows="1"
+                ></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlTextarea2" class="form-label"
+                  >Ends</label
+                >
+                <textarea
+                  class="form-control"
+                  id="exampleFormControlTextarea5"
+                  rows="1"
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                Close
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+                aria-label="Post"
+                id="postBtn"
+              >
+                Post
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <!-- Footer -->
     <section>
       <div class="container">
