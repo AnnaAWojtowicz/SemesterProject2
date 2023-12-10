@@ -20,6 +20,8 @@ let listingsId = params.get("listingsId");
 let profileName = params.get("profileName");
 let token = localStorage.getItem("accessToken");
 
+let containerHtmlCard = document.getElementById("singleCard");
+let containerHtmlCardDetails = document.getElementById("singleCardDetails");
 // if (listingsId !== null) {
 //     showAuctionsCardDetails(listingsId);
 //     console.log(listingsId);
@@ -122,6 +124,43 @@ async function showUserProfile(name) {
       </div>
 `;
   showUserCreditsHeader(profile);
+  showUserListings(profile.listings);
+}
+
+/**
+ * Shows users listings
+ */
+
+function showUserListings(listings) {
+  containerHtmlCard.innerHTML = "";
+  for (let i = 0; i < listings.length; i++) {
+    let formattedDate = new Date(listings[i].updated).toLocaleDateString();
+    let formattedTime = new Date(listings[i].updated).toLocaleTimeString();
+
+    containerHtmlCard.innerHTML += `
+        
+  <div class="col">
+            <div class="border card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="
+                    background-image: url(${listings[i].media[0]});
+                  ">
+              <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
+                  ${listings[i].title}
+                </h3>
+                <ul class="d-flex list-unstyled mt-auto">
+                  <li class="me-auto">
+                    <a href="?listingsId=${listings[i].id}"><button type="button" class="btn aboutBtn" id="${listings[i].id}">About</button></a>
+                  </li>
+                  <li class="d-flex align-items-center">
+                    <i class="bi me-2 ms-2 bi-calendar3"></i>
+                    <small>${formattedDate} ${formattedTime}</small>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+  `;
+  }
 }
 
 /**
@@ -156,7 +195,7 @@ function showUserCreditsHeader(profile) {
           <ul class="dropdown-menu text-small">
             <li><a class="dropdown-item" href="#">Your Auctions</a></li>
             <li><a class="dropdown-item" href="#">Your Bids</a></li>
-            <li><a class="dropdown-item" href="#">Your Profile</a></li>
+            <li><a class="dropdown-item" href="./index.html?profileName=${profile.name}">Your Profile</a></li>
             <li>
               <hr class="dropdown-divider" />
             </li>
@@ -175,9 +214,6 @@ function signOut() {
   localStorage.removeItem("profile");
   window.location.href = "./index.html";
 }
-
-let containerHtmlCard = document.getElementById("singleCard");
-let containerHtmlCardDetails = document.getElementById("singleCardDetails");
 
 /**
  * Shows cards with listings sent from API;

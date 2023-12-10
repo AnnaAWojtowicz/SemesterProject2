@@ -16,13 +16,16 @@ export async function getProfiles(token) {
 }
 
 export async function getProfile(token, name) {
-  const response = await fetch(`${apiPath}/auction/profiles/${name}`, {
-    method: "get",
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${token}`,
+  const response = await fetch(
+    `${apiPath}/auction/profiles/${name}?_listings=true`,
+    {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     },
-  });
+  );
 
   if (response.ok) {
     return await response.json();
