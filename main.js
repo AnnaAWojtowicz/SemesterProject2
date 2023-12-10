@@ -19,7 +19,6 @@ let params = new URLSearchParams(window.location.search);
 let listingsId = params.get("listingsId");
 let profileName = params.get("profileName");
 let token = localStorage.getItem("accessToken");
-let userCredits = undefined;
 
 // if (listingsId !== null) {
 //     showAuctionsCardDetails(listingsId);
@@ -84,11 +83,7 @@ document
     const userData = await logInUser(userEmail, userPassword);
 
     if (userData.email === userEmail) {
-      document.getElementById("header1").style.display = "block";
-      document.getElementById("header2").style.display = "none";
-
-      userCredits = userData.credits;
-      showUserCreditsHeader();
+      window.location.href = `./index.html?profileName=${userData.name}`;
     }
   });
 
@@ -98,6 +93,8 @@ document
 
 async function showUserProfile(name) {
   const profile = await getProfile(token, name);
+  localStorage.setItem("profile", JSON.stringify(profile));
+
   let userCardContainer = document.getElementById("contUsersCardBody");
   userCardContainer.innerHTML = `
 <div class="card mb-3 border rounded-4" id="usersCardBody">
@@ -124,12 +121,15 @@ async function showUserProfile(name) {
         </div>
       </div>
 `;
+  showUserCreditsHeader(profile);
 }
 
 /**
  * Gets users data (credits in header when logged in
  */
-async function showUserCreditsHeader() {
+function showUserCreditsHeader(profile) {
+  document.getElementById("header1").style.display = "block";
+  document.getElementById("header2").style.display = "none";
   let creditsContainer = document.getElementById("header1");
   creditsContainer.innerHTML = "";
   creditsContainer.innerHTML = `
@@ -140,7 +140,7 @@ async function showUserCreditsHeader() {
 
         <ul class="d-flex nav col-12 col-lg-auto me-lg-auto mb-2 align-items-baseline mb-md-0">
           <li class="px-4 justify-self-end" id="usersCredits">
-            <h5>Your credits: ${userCredits}</h5>
+            <h5>Your credits: ${profile.credits}</h5>
           </li>
         </ul>
 
@@ -151,7 +151,7 @@ async function showUserCreditsHeader() {
         <div class="dropdown text-end">
           <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
             aria-expanded="false">
-            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle" />
+            <img src="${profile.avatar}" alt="mdo" width="32" height="32" class="rounded-circle" />
           </a>
           <ul class="dropdown-menu text-small">
             <li><a class="dropdown-item" href="#">Your Auctions</a></li>
@@ -160,12 +160,20 @@ async function showUserCreditsHeader() {
             <li>
               <hr class="dropdown-divider" />
             </li>
-            <li><a class="dropdown-item" href="#">Sign out</a></li>
+            <li><a class="dropdown-item" href="#" id="signOut">Sign out</a></li>
           </ul>
         </div>
       </div>
     </div>
 `;
+  document.getElementById("signOut").addEventListener("click", signOut);
+}
+
+function signOut() {
+  localStorage.removeItem("name");
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("profile");
+  window.location.href = "./index.html";
 }
 
 let containerHtmlCard = document.getElementById("singleCard");
@@ -175,6 +183,10 @@ let containerHtmlCardDetails = document.getElementById("singleCardDetails");
  * Shows cards with listings sent from API;
  */
 async function showAuctionsCards() {
+  if (token !== null) {
+    showUserCreditsHeader(JSON.parse(localStorage.getItem("profile")));
+  }
+
   document.getElementById("singleCardDetails").style.display = "none";
   const cards = await getListings();
 
