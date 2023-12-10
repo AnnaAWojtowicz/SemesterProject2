@@ -9,64 +9,39 @@
   </head>
 
   <body>
-    <header class="p-3 .border-bottom" id="header1">
-      <div class="container">
-        <div
-          class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-center"
-        >
-          <a href="index.html"
-            ><img
-              src="./img/logowinsLogo (1).png"
-              aria-label="Wins logo"
-              width="40"
-              height="auto"
-              class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none"
-          /></a>
+    <header class="p-3 border-bottom" id="header1">
+      <!-- <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-center">
+        <a href="index.html"><img src="./img/logowinsLogo (1).png" aria-label="Wins logo" width="40" height="auto"
+            class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none" /></a>
 
-          <ul
-            class="d-flex nav col-12 col-lg-auto me-lg-auto mb-2 align-items-baseline mb-md-0"
-          >
-            <li class="px-4 justify-self-end" id="usersCredits">
-              <h5>Your credits: 1000</h5>
+        <ul class="d-flex nav col-12 col-lg-auto me-lg-auto mb-2 align-items-baseline mb-md-0">
+          <li class="px-4 justify-self-end" id="usersCredits">
+            <h5>Your credits: 1000</h5>
+          </li>
+        </ul>
+
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+          <input type="search" class="form-control" placeholder="Search..." aria-label="Search" />
+        </form>
+
+        <div class="dropdown text-end">
+          <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle" />
+          </a>
+          <ul class="dropdown-menu text-small">
+            <li><a class="dropdown-item" href="#">Your Auctions</a></li>
+            <li><a class="dropdown-item" href="#">Your Bids</a></li>
+            <li><a class="dropdown-item" href="#">Your Profile</a></li>
+            <li>
+              <hr class="dropdown-divider" />
             </li>
+            <li><a class="dropdown-item" href="#">Sign out</a></li>
           </ul>
-
-          <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-            <input
-              type="search"
-              class="form-control"
-              placeholder="Search..."
-              aria-label="Search"
-            />
-          </form>
-
-          <div class="dropdown text-end">
-            <a
-              href="#"
-              class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <img
-                src="https://github.com/mdo.png"
-                alt="mdo"
-                width="32"
-                height="32"
-                class="rounded-circle"
-              />
-            </a>
-            <ul class="dropdown-menu text-small">
-              <li><a class="dropdown-item" href="#">Your Auctions</a></li>
-              <li><a class="dropdown-item" href="#">Your Bids</a></li>
-              <li><a class="dropdown-item" href="#">Your Profile</a></li>
-              <li>
-                <hr class="dropdown-divider" />
-              </li>
-              <li><a class="dropdown-item" href="#">Sign out</a></li>
-            </ul>
-          </div>
         </div>
       </div>
+    </div> -->
     </header>
 
     <header class="p-3 border-bottom" id="header2">
@@ -122,7 +97,7 @@
       </div>
     </header>
 
-    <!-- MODAL SIGN IN-->
+    <!-- MODAL LOGIN-->
     <div
       class="modal fade"
       id="exampleModal"
@@ -134,7 +109,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h2 class="modal-title fs-5" id="exampleModalLabel">
-              Please sign in
+              Please log in
             </h2>
             <button
               type="button"
@@ -159,6 +134,7 @@
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
                   required
+                  value="orwellg@stud.noroff.no"
                 />
                 <div id="emailHelp" class="form-text">
                   We'll never share your email with anyone else.
@@ -174,6 +150,7 @@
                   id="exampleInputPassword1"
                   minlength="8"
                   required
+                  value="1984Orwell"
                 />
               </div>
             </div>
@@ -185,7 +162,12 @@
               >
                 Close
               </button>
-              <button type="submit" class="btn btn-primary" id="submitBtn1">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                id="submitBtn1"
+                data-bs-dismiss="modal"
+              >
                 Submit
               </button>
             </div>
@@ -270,7 +252,12 @@
               >
                 Close
               </button>
-              <button type="submit" class="btn btn-primary" id="submitBtn2">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                id="submitBtn2"
+                data-bs-dismiss="modal"
+              >
                 Submit
               </button>
             </div>
@@ -280,6 +267,33 @@
     </div>
 
     <main>
+      <!-- PROFILE CARD -->
+      <div class="container pt-5" id="contUsersCardBody">
+        <!-- <div class="card mb-3 border rounded-4" id="usersCardBody">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="./img/maksym-ostrozhynskyy-w6OniVDCfn0-unsplash.jpg" class="img-fluid" id="profileImg"
+              alt="..." />
+          </div>
+          <div class="col-md-8">
+            <div class="card-body" id="cardBody">
+              <h1 class="card-title my-4">Kati-san</h1>
+              <h4 class="card-text my-4">Your Credits: 1000</h4>
+              <button class="btn btn-primary my-4 me-2" type="submit">
+                New Auction
+              </button>
+              <button class="btn btn-primary my-4 me-2" type="submit">
+                Your Bids
+              </button>
+              <button class="btn btn-primary my-4 me-2" type="submit">
+                Change Avatar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div> -->
+      </div>
+
       <!--CARDS AUCTIONS-->
       <div class="container">
         <div
@@ -468,38 +482,6 @@
       </div>
     </main>
 
-    <!-- PROFILE CARD -->
-    <div class="container">
-      <div class="card mb-3 border rounded-4" id="usersCardBody">
-        <div class="row g-0">
-          <div class="col-md-4">
-            <img
-              src="./img/maksym-ostrozhynskyy-w6OniVDCfn0-unsplash.jpg"
-              class="img-fluid"
-              id="profileImg"
-              alt="..."
-            />
-          </div>
-          <div class="col-md-8">
-            <div class="card-body" id="cardBody">
-              <h1 class="card-title my-4">Kati-san</h1>
-              <h4 class="card-text my-4">Your Credits: 1000</h4>
-              <button class="btn btn-primary my-4 me-2" type="submit">
-                New Auction
-              </button>
-              <button class="btn btn-primary my-4 me-2" type="submit">
-                Your Bids
-              </button>
-              <button class="btn btn-primary my-4 me-2" type="submit">
-                Change Avatar
-              </button>
-              <!-- <button class="btn btn-primary my-4 me-3" type="submit">Change Password</button> -->
-              <p class="card-text"></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
     <!-- Footer -->
     <section>
       <div class="container">

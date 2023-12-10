@@ -13,9 +13,32 @@ import { getListings } from "./src/js/api/listings/read";
 import { getListingById } from "./src/js/api/listings/listingID";
 import { logInUser } from "./src/js/api/auth/login";
 import { registerNewUser } from "./src/js/api/auth/register";
+import { getProfile } from "./src/js/api/profiles/read";
 
 let params = new URLSearchParams(window.location.search);
 let listingsId = params.get("listingsId");
+let profileName = params.get("profileName");
+let token = localStorage.getItem("accessToken");
+let userCredits = undefined;
+
+// if (listingsId !== null) {
+//     showAuctionsCardDetails(listingsId);
+//     console.log(listingsId);
+// } else {
+//     showAuctionsCards();
+// }
+
+if (listingsId === null && profileName === null) {
+  showAuctionsCards();
+}
+
+if (listingsId !== null) {
+  showAuctionsCardDetails(listingsId);
+}
+
+if (profileName !== null) {
+  showUserProfile(profileName);
+}
 
 // Gets the values of name, email adress, password and avatar when user register
 document
@@ -59,24 +82,94 @@ document
     const userPassword = passwordLogin.value;
 
     const userData = await logInUser(userEmail, userPassword);
+
     if (userData.email === userEmail) {
-      window.location.reload();
       document.getElementById("header1").style.display = "block";
       document.getElementById("header2").style.display = "none";
+
+      userCredits = userData.credits;
+      showUserCreditsHeader();
     }
   });
 
-if (listingsId !== null) {
-  showAuctionsCardDetails(listingsId);
-  console.log(listingsId);
-} else {
-  showAuctionsCards();
+/**
+ * Shows profile with user's data
+ */
+
+async function showUserProfile(name) {
+  const profile = await getProfile(token, name);
+  let userCardContainer = document.getElementById("contUsersCardBody");
+  userCardContainer.innerHTML = `
+<div class="card mb-3 border rounded-4" id="usersCardBody">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="${profile.avatar}" class="img-fluid" id="profileImg"
+              alt="..." />
+          </div>
+          <div class="col-md-8">
+            <div class="card-body" id="cardBody">
+              <h1 class="card-title my-4">${profile.name}</h1>
+              <h4 class="card-text my-4">Your Credits: ${profile.credits}</h4>
+              <button class="btn btn-primary my-4 me-2" type="submit">
+                New Auction
+              </button>
+              <button class="btn btn-primary my-4 me-2" type="submit">
+                Your Bids
+              </button>
+              <button class="btn btn-primary my-4 me-2" type="submit">
+                Change Avatar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+`;
+}
+
+/**
+ * Gets users data (credits in header when logged in
+ */
+async function showUserCreditsHeader() {
+  let creditsContainer = document.getElementById("header1");
+  creditsContainer.innerHTML = "";
+  creditsContainer.innerHTML = `
+<div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-center">
+        <a href="index.html"><img src="./img/logowinsLogo (1).png" aria-label="Wins logo" width="40" height="auto"
+            class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none" /></a>
+
+        <ul class="d-flex nav col-12 col-lg-auto me-lg-auto mb-2 align-items-baseline mb-md-0">
+          <li class="px-4 justify-self-end" id="usersCredits">
+            <h5>Your credits: ${userCredits}</h5>
+          </li>
+        </ul>
+
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+          <input type="search" class="form-control" placeholder="Search..." aria-label="Search" />
+        </form>
+
+        <div class="dropdown text-end">
+          <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle" />
+          </a>
+          <ul class="dropdown-menu text-small">
+            <li><a class="dropdown-item" href="#">Your Auctions</a></li>
+            <li><a class="dropdown-item" href="#">Your Bids</a></li>
+            <li><a class="dropdown-item" href="#">Your Profile</a></li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li><a class="dropdown-item" href="#">Sign out</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+`;
 }
 
 let containerHtmlCard = document.getElementById("singleCard");
 let containerHtmlCardDetails = document.getElementById("singleCardDetails");
-
-// window.onload = showAuctionsCards();
 
 /**
  * Shows cards with listings sent from API;
@@ -127,7 +220,7 @@ async function showAuctionsCardDetails(id) {
   let formattedDateEnd = new Date(cardDetails.endsAt).toLocaleDateString();
   let formattedTimeEnd = new Date(cardDetails.endsAt).toLocaleTimeString();
 
-  containerHtmlCardDetails.innerHTML += `
+  containerHtmlCardDetails.innerHTML = `
         <div class="card rounded-top-4 border">
         <div class="card-img-top border-bottom">
          
@@ -172,7 +265,7 @@ async function showAuctionsCardDetails(id) {
           </p>
         </div>
         <ul class="list-group list-group-flush">
-        <li class="list-group-item">Seller:  ${cardDetails.seller.name}</li>
+        <li class="list-group-item">Seller:  <a href="./index.html?profileName=${cardDetails.seller.name}">${cardDetails.seller.name}</a></li>
           <li class="list-group-item">Tags:  ${cardDetails.tags}</li>
           <li class="list-group-item">Auction ends at: ${formattedDateEnd} ${formattedTimeEnd}</li>
           <li class="list-group-item">Bids: ${cardDetails._count.bids}</li>
