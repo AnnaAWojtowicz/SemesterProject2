@@ -277,6 +277,79 @@
       </div>
     </div>
 
+    <!-- MODAL UPDATE-->
+    <div
+      class="modal fade"
+      id="updateModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel3"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title details fs-5" id="exampleModalLabel3">
+              Now you can update your avatar
+            </h2>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <form
+            name="form"
+            id="formUpdate"
+            method="post"
+            class="needs-validation"
+          >
+            <div class="modal-body">
+              <!--  <div class="mb-3">
+              <label for="InputName3" class="form-label details">Name</label>
+              <input type="text" class="form-control details" id="InputName3" aria-describedby="emailHelp" required />
+            </div>
+            <div class="mb-3">
+              <label for="InputEmail3" class="form-label details">Email address</label>
+              <input type="email" class="form-control details" id="InputEmail3" aria-describedby="emailHelp" required />
+            </div>
+            <div class="mb-3">
+              <label for="InputPassword3" class="form-label details">Password</label>
+              <input type="password" class="form-control details" id="InputPassword3" minlength="8" required />
+            </div> -->
+              <div class="mb-3">
+                <label for="InputAvatar" class="form-label details"
+                  >Avatar</label
+                >
+                <input
+                  type="text"
+                  class="form-control details"
+                  id="InputAvatar3"
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                id="updateBtn"
+                data-bs-dismiss="modal"
+              >
+                Update
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <main>
       <!-- ALBUM INTRO/CAROUSEL -->
       <div id="carouselIntro" class="carousel slide border-bottom">

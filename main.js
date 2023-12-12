@@ -16,6 +16,7 @@ import { registerNewUser } from "./src/js/api/auth/register";
 import { getProfile } from "./src/js/api/profiles/read";
 import { newListing } from "./src/js/api/listings/listingNew";
 import { deleteListing } from "./src/js/api/listings/delete";
+import { updateMyAvatar } from "./src/js/api/profiles/updateAvatar";
 
 let params = new URLSearchParams(window.location.search);
 let listingsId = params.get("listingsId");
@@ -117,7 +118,7 @@ async function showUserProfile(name) {
               <button class="btn btn-primary my-4 me-2" type="submit">
                 Your Bids
               </button>
-              <button class="btn btn-primary my-4 me-2" type="submit">
+              <button class="btn btn-primary my-4 me-2" id="updateAvatarBtn" type="submit" data-bs-toggle="modal" data-bs-target="#updateModal">
                 Change Avatar
               </button>
             </div>
@@ -128,6 +129,21 @@ async function showUserProfile(name) {
   showUserCreditsHeader(profile);
   showUserListings(profile.listings);
 }
+
+/**
+ * Updates user's img
+ */
+// function updateUserData(token, userName, userAvatar) {
+document
+  .getElementById("updateBtn")
+  .addEventListener("click", async (event) => {
+    let userName = JSON.parse(localStorage.getItem("profile")).name;
+    const userAvatar = document.getElementById("InputAvatar3").value;
+    event.preventDefault();
+    await updateMyAvatar(token, userName, userAvatar);
+    window.location.href = `./index.html?profileName=${userName}`;
+  });
+//}
 
 /**
  * Creates new listing
@@ -182,30 +198,21 @@ function showUserListings(listings) {
     let formattedTime = new Date(listings[i].updated).toLocaleTimeString();
 
     containerHtmlCard.innerHTML += `
-        
-  <div class="col">
-            <div class="border card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="
-                    background-image: url(${listings[i].media[0]});
-                    background-size: contain;
-                    background-repeat: no-repeat;
-                    background-position: center;
-                  " id="cardImg">
-              <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-                <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
-                  ${listings[i].title}
-                </h3>
-                <ul class="d-flex list-unstyled mt-auto">
-                  <li class="me-auto">
-                    <a href="?listingsId=${listings[i].id}"><button type="button " class="btn aboutBtn btn-primary" id="${listings[i].id}">About</button></a>
-                  </li>
-                  <li class="d-flex align-items-center">
-                    <i class="bi me-2 ms-2 bi-calendar3 details2"></i>
-                    <small class="details2">${formattedDate} ${formattedTime}</small>
-                  </li>
-                </ul>
-              </div>
+        <div class="col">
+            <div class="card border rounded-4" style="height: 450px">
+                <img src="${listings[i].media[0]}" class="card-img-top card-img" alt="..." style="height: 300px">
+                <div class="card-body cardBodyRounded d-flex-column align-items-start mb">
+                    <h3 class="card-title details p-2">${listings[i].title}</h3>
+                    <div class="mb-auto p-2">
+                        <div class="d-flex justify-content-between align-items-center ">
+                            <a href="?listingsId=${listings[i].id}" class=""><button type="button" class="btn aboutBtn btn-primary"
+                            id="${listings[i].id}">About</button></a>
+                            <small class="details ">${formattedDate} ${formattedTime}</small>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+        </div>
   `;
   }
 }
@@ -244,7 +251,7 @@ function showUserCreditsHeader(profile) {
   let creditsContainer = document.getElementById("header1");
   creditsContainer.innerHTML = "";
   creditsContainer.innerHTML = `
-<div class="container">
+    <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-center">
         <a href="index.html"><img src="./img/logowinsLogo (1).png" aria-label="Wins logo" width="40" height="auto"
             class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none" /></a>
@@ -307,9 +314,7 @@ async function showAuctionsCards() {
     let formattedTime = new Date(cards[i].updated).toLocaleTimeString();
 
     containerHtmlCard.innerHTML += `
-        
         <div class="col">
-
         <div class="card border rounded-4" style="height: 450px">
         <img src="${cards[i].media[0]}" class="card-img-top card-img" alt="..." style="height: 300px">
         <div class="card-body cardBodyRounded d-flex-column align-items-start mb">
@@ -323,16 +328,7 @@ async function showAuctionsCards() {
               </div>
         </div>
       </div>
-
         </div>
-
-
-
-     
-
-
-
-
   `;
   }
 }
