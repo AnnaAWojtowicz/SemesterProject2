@@ -110,7 +110,7 @@ async function showUserProfile(name) {
           <div class="col-md-8">
             <div class="card-body" id="cardBody">
               <h1 class="card-title my-4">${profile.name}</h1>
-              <h4 class="card-text my-4">Your Credits: ${profile.credits}</h4>
+              <h4 class="card-text my-4 details">Your Credits: ${profile.credits}</h4>
               <button class="btn btn-primary my-4 me-2" type="submit" data-bs-toggle="modal" data-bs-target="#newAuctionModal">
                 New Auction
               </button>
@@ -196,11 +196,11 @@ function showUserListings(listings) {
                 </h3>
                 <ul class="d-flex list-unstyled mt-auto">
                   <li class="me-auto">
-                    <a href="?listingsId=${listings[i].id}"><button type="button" class="btn aboutBtn" id="${listings[i].id}">About</button></a>
+                    <a href="?listingsId=${listings[i].id}"><button type="button " class="btn aboutBtn btn-primary" id="${listings[i].id}">About</button></a>
                   </li>
                   <li class="d-flex align-items-center">
-                    <i class="bi me-2 ms-2 bi-calendar3"></i>
-                    <small>${formattedDate} ${formattedTime}</small>
+                    <i class="bi me-2 ms-2 bi-calendar3 details2"></i>
+                    <small class="details2">${formattedDate} ${formattedTime}</small>
                   </li>
                 </ul>
               </div>
@@ -308,26 +308,31 @@ async function showAuctionsCards() {
 
     containerHtmlCard.innerHTML += `
         
-  <div class="col">
-            <div class="border card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="
-                    background-image: url(${cards[i].media[0]});
-                  ">
-              <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-                <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
-                  ${cards[i].title}
-                </h3>
-                <ul class="d-flex list-unstyled mt-auto">
-                  <li class="me-auto">
-                    <a href="?listingsId=${cards[i].id}"><button type="button" class="btn aboutBtn" id="${cards[i].id}">About</button></a>
-                  </li>
-                  <li class="d-flex align-items-center">
-                    <i class="bi me-2 ms-2 bi-calendar3"></i>
-                    <small>${formattedDate} ${formattedTime}</small>
-                  </li>
-                </ul>
+        <div class="col">
+
+        <div class="card border rounded-4" style="height: 450px">
+        <img src="${cards[i].media[0]}" class="card-img-top card-img" alt="..." style="height: 300px">
+        <div class="card-body cardBodyRounded d-flex-column align-items-start mb">
+          <h3 class="card-title details p-2">${cards[i].title}</h3>
+         <div class="mb-auto p-2">
+          <div class="d-flex justify-content-between align-items-center ">
+                <a href="?listingsId=${cards[i].id}" class=""><button type="button" class="btn aboutBtn btn-primary"
+                id="${cards[i].id}">About</button></a>
+                <small class="details ">${formattedDate} ${formattedTime}</small>
               </div>
-            </div>
-          </div>
+              </div>
+        </div>
+      </div>
+
+        </div>
+
+
+
+     
+
+
+
+
   `;
   }
 }
@@ -350,11 +355,11 @@ async function showAuctionsCardDetails(id) {
          
           <div id="carouselExampleIndicators" class="carousel slide">
             <div class="carousel-indicators">
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active "
                 aria-current="true" aria-label="Slide 1"></button>
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" class=""
                 aria-label="Slide 2"></button>
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" class=""
                 aria-label="Slide 3"></button>
             </div>
             <div class="carousel-inner rounded-top-4">
@@ -369,12 +374,12 @@ async function showAuctionsCardDetails(id) {
                 <img src="${cardDetails.media[2]}" class="d-block w-100 carousel-img" alt="..." />
               </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+            <button class="carousel-control-prev " type="button" data-bs-target="#carouselExampleIndicators"
               data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+            <button class="carousel-control-next " type="button" data-bs-target="#carouselExampleIndicators"
               data-bs-slide="next">
               <span class="carousel-control-next-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Next</span>
@@ -383,22 +388,22 @@ async function showAuctionsCardDetails(id) {
         </div>
 
         <div class="card-body">
-          <h5 class="card-title">${cardDetails.title}</h5>
-          <p class="card-text">
+          <h5 class="card-title details">${cardDetails.title}</h5>
+          <p class="card-text details">
           ${cardDetails.description}
           </p>
         </div>
         <ul class="list-group list-group-flush">
-        <li class="list-group-item">Seller:  <a href="./index.html?profileName=${cardDetails.seller.name}">${cardDetails.seller.name}</a></li>
-          <li class="list-group-item">Tags:  ${cardDetails.tags}</li>
-          <li class="list-group-item">Auction ends at: ${formattedDateEnd} ${formattedTimeEnd}</li>
-          <li class="list-group-item">Bids: ${cardDetails._count.bids}</li>
+        <li class="list-group-item details">Seller:  <a href="./index.html?profileName=${cardDetails.seller.name}">${cardDetails.seller.name}</a></li>
+          <li class="list-group-item details">Tags:  ${cardDetails.tags}</li>
+          <li class="list-group-item details">Auction ends at: ${formattedDateEnd} ${formattedTimeEnd}</li>
+          <li class="list-group-item details">Bids: ${cardDetails._count.bids}</li>
         </ul>
         <div class="card-body">
-          <button type="button" class="btn" id="backBtn">Go back</button>
-          <button type="button" class="btn" id="bidBtn">Bid</button>
-          <button type="button" class="btn" id="editBtn">Edit</button>
-          <button type="button" class="btn" id="deleteBtn">Delete</button>
+          <button type="button" class="btn btn-primary" id="backBtn">Go back</button>
+          <button type="button" class="btn btn-primary" id="bidBtn">Bid</button>
+          <button type="button" class="btn btn-primary" id="editBtn">Edit</button>
+          <button type="button" class="btn btn-primary" id="deleteBtn">Delete</button>
         </div>
       </div>
       `;

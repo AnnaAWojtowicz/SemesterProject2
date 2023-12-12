@@ -18,11 +18,23 @@ $failActive: #78081d;
 body {
   font-family: "Manrope", sans-serif;
   background-color: $secondaryBackground;
-  // color: $primaryBackground;
+  color: $details;
 }
 
 header {
   background-color: $secondaryDetail;
+}
+
+.details {
+  color: $details;
+}
+
+.details2 {
+  color: $primaryBackground;
+}
+
+.details3 {
+  font-weight: bold;
 }
 
 #header1 {
@@ -62,19 +74,30 @@ header {
 
 h2 {
   font-size: 3rem;
+  color: $primaryBackground !important;
 }
 
 .form-control {
   background-color: $primaryBackground !important;
+  border: $details;
 }
 
 .modal-content {
   background-color: $secondaryBackground;
 }
 
+.modal-title {
+  color: $details !important;
+}
+
 h1,
 h3 {
   font-family: "Marcellus", serif;
+  color: $primaryBackground;
+}
+
+p {
+  color: $primaryBackground;
 }
 
 .btn {
@@ -83,6 +106,35 @@ h3 {
   border-color: $primaryBackground;
   font-family: "Manrope", sans-serif;
   font-weight: 300;
+  a {
+    &:hover,
+    &:focus,
+    &:active,
+    &:disabled {
+      text-decoration: none !important;
+      color: $details !important;
+      background-color: $primaryBackground !important;
+    }
+  }
+}
+
+.btn-primary {
+  &:hover,
+  &:focus,
+  &:active,
+  &:disabled {
+    text-decoration: none !important;
+    color: $details !important;
+    border-color: $details !important;
+    background-color: $primaryBackground !important;
+  }
+}
+
+li {
+  a {
+    text-decoration: none !important;
+    color: $details !important;
+  }
 }
 
 .carousel-item {
@@ -92,10 +144,28 @@ h3 {
     height: 500px;
   }
 }
+.dropdown-menu,
+.dropdown-item {
+  color: $details;
+  background-color: $primaryBackground;
+}
 
 .card-body,
 .list-group-item {
   background-color: $primaryBackground;
+}
+
+.card-img {
+  object-fit: cover;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.cardBodyRounded {
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 
 #profileImg {

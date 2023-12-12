@@ -64,10 +64,13 @@
             <!-- <h5>Your credits: 1000</h5>-->
           </ul>
 
-          <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+          <form
+            class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 details"
+            role="search"
+          >
             <input
               type="search"
-              class="form-control"
+              class="form-control details"
               placeholder="Search..."
               aria-label="Search"
             />
@@ -76,7 +79,7 @@
           <div class="text-end">
             <button
               type="button"
-              class="btn btn-outline-light me-2"
+              class="btn btn-primary me-2"
               id="login"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
@@ -85,7 +88,7 @@
             </button>
             <button
               type="button"
-              class="btn btn-warning"
+              class="btn btn-primary"
               id="signUp"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal2"
@@ -130,13 +133,13 @@
                 >
                 <input
                   type="email"
-                  class="form-control"
+                  class="form-control details"
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
                   required
                   value="orwellg@stud.noroff.no"
                 />
-                <div id="emailHelp" class="form-text">
+                <div id="emailHelp" class="form-text details">
                   We'll never share your email with anyone else.
                 </div>
               </div>
@@ -146,7 +149,7 @@
                 >
                 <input
                   type="password"
-                  class="form-control"
+                  class="form-control details"
                   id="exampleInputPassword1"
                   minlength="8"
                   required
@@ -157,7 +160,7 @@
             <div class="modal-footer">
               <button
                 type="button"
-                class="btn btn-secondary"
+                class="btn btn-primary"
                 data-bs-dismiss="modal"
               >
                 Close
@@ -187,7 +190,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h2 class="modal-title fs-5" id="exampleModalLabel2">
+            <h2 class="modal-title details fs-5" id="exampleModalLabel2">
               Please sign up
             </h2>
             <button
@@ -205,49 +208,57 @@
           >
             <div class="modal-body">
               <div class="mb-3">
-                <label for="InputName2" class="form-label">Name</label>
+                <label for="InputName2" class="form-label details">Name</label>
                 <input
                   type="text"
-                  class="form-control"
+                  class="form-control details"
                   id="InputName2"
                   aria-describedby="emailHelp"
                   required
                 />
               </div>
               <div class="mb-3">
-                <label for="InputEmail2" class="form-label"
+                <label for="InputEmail2" class="form-label details"
                   >Email address</label
                 >
                 <input
                   type="email"
-                  class="form-control"
+                  class="form-control details"
                   id="InputEmail2"
                   aria-describedby="emailHelp"
                   required
                 />
-                <div id="emailHelp" class="form-text">
+                <div id="emailHelp" class="form-text details">
                   We'll never share your email with anyone else.
                 </div>
               </div>
               <div class="mb-3">
-                <label for="InputPassword2" class="form-label">Password</label>
+                <label for="InputPassword2" class="form-label details"
+                  >Password</label
+                >
                 <input
                   type="password"
-                  class="form-control"
+                  class="form-control details"
                   id="InputPassword2"
                   minlength="8"
                   required
                 />
               </div>
               <div class="mb-3">
-                <label for="InputAvatar" class="form-label">Avatar</label>
-                <input type="text" class="form-control" id="InputAvatar2" />
+                <label for="InputAvatar" class="form-label details"
+                  >Avatar</label
+                >
+                <input
+                  type="text"
+                  class="form-control details"
+                  id="InputAvatar2"
+                />
               </div>
             </div>
             <div class="modal-footer">
               <button
                 type="button"
-                class="btn btn-secondary"
+                class="btn btn-primary"
                 data-bs-dismiss="modal"
               >
                 Close
