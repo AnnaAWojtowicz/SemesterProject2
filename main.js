@@ -14,6 +14,8 @@ import { getListingById } from "./src/js/api/listings/listingID";
 import { logInUser } from "./src/js/api/auth/login";
 import { registerNewUser } from "./src/js/api/auth/register";
 import { getProfile } from "./src/js/api/profiles/read";
+import { newListing } from "./src/js/api/listings/listingNew";
+import { deleteListing } from "./src/js/api/listings/delete";
 
 let params = new URLSearchParams(window.location.search);
 let listingsId = params.get("listingsId");
@@ -34,7 +36,8 @@ if (listingsId === null && profileName === null) {
 }
 
 if (listingsId !== null) {
-  showAuctionsCardDetails(listingsId);
+  await showAuctionsCardDetails(listingsId);
+  addDeleteBtnEventListener();
 }
 
 if (profileName !== null) {
@@ -92,7 +95,6 @@ document
 /**
  * Shows profile with user's data
  */
-
 async function showUserProfile(name) {
   const profile = await getProfile(token, name);
   localStorage.setItem("profile", JSON.stringify(profile));
@@ -128,10 +130,52 @@ async function showUserProfile(name) {
 }
 
 /**
+ * Creates new listing
+ */
+const formNewListing = document.getElementById("formNewListing");
+document.getElementById("postBtn").addEventListener("click", async (event) => {
+  event.preventDefault();
+  const titleListing = formNewListing.elements[0];
+  const endDateListing = formNewListing.elements[4];
+  const descriptionListing = formNewListing.elements[1];
+  const tagsListing = formNewListing.elements[3];
+  const mediaListing = formNewListing.elements[2];
+
+  const titleUserListing = titleListing.value;
+  const endDateUserListing = convertInputDateToIsoDate(endDateListing.value);
+  const descriptionUserListing = descriptionListing.value;
+  const tagsUserListing = tagsListing.value.split(",");
+  const mediaUserListing = mediaListing.value.split(",");
+
+  await newListing(
+    token,
+    titleUserListing,
+    endDateUserListing,
+    descriptionUserListing,
+    tagsUserListing,
+    mediaUserListing,
+  );
+});
+
+/**
+ * Changes the date format to ISOdate
+ * expected format: "31.12.2023"
+ * @param {*} date
+ * @returns
+ */
+function convertInputDateToIsoDate(dateString) {
+  let parts = dateString.split(".");
+  let date = new Date(parts[2], parts[1] - 1, parts[0]);
+
+  let formattedDate = date.toISOString();
+  return formattedDate;
+}
+
+/**
  * Shows users listings
  */
-
 function showUserListings(listings) {
+  document.getElementById("carouselIntro").style.display = "none";
   containerHtmlCard.innerHTML = "";
   for (let i = 0; i < listings.length; i++) {
     let formattedDate = new Date(listings[i].updated).toLocaleDateString();
@@ -142,7 +186,10 @@ function showUserListings(listings) {
   <div class="col">
             <div class="border card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="
                     background-image: url(${listings[i].media[0]});
-                  ">
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                  " id="cardImg">
               <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
                 <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
                   ${listings[i].title}
@@ -164,11 +211,36 @@ function showUserListings(listings) {
 }
 
 /**
+ * Deletes user's auction
+ */
+function addDeleteBtnEventListener() {
+  document
+    .getElementById("deleteBtn")
+    .addEventListener("click", async (event) => {
+      event.preventDefault();
+      const deleteResult = await deleteListing(token, listingsId);
+
+      if (deleteResult) {
+        window.location.href = `./index.html?profileName=${localStorage.getItem(
+          "name",
+        )}`;
+      } else {
+        alert("Error deleting listing");
+      }
+    });
+}
+
+/**
+ * Edits users auction
+ */
+
+/**
  * Gets users data (credits in header when logged in
  */
 function showUserCreditsHeader(profile) {
   document.getElementById("header1").style.display = "block";
   document.getElementById("header2").style.display = "none";
+  document.getElementById("carouselIntro").style.display = "none";
   let creditsContainer = document.getElementById("header1");
   creditsContainer.innerHTML = "";
   creditsContainer.innerHTML = `
@@ -208,6 +280,9 @@ function showUserCreditsHeader(profile) {
   document.getElementById("signOut").addEventListener("click", signOut);
 }
 
+/**
+ * Signs out user and removes all data from local storage
+ */
 function signOut() {
   localStorage.removeItem("name");
   localStorage.removeItem("accessToken");
@@ -261,6 +336,7 @@ async function showAuctionsCards() {
  * Gets details of an auction and shows it as single card without a possibility to do the bid
  */
 async function showAuctionsCardDetails(id) {
+  document.getElementById("carouselIntro").style.display = "none";
   const cardDetails = await getListingById(id);
 
   containerHtmlCardDetails.innerHTML = "";
@@ -319,8 +395,10 @@ async function showAuctionsCardDetails(id) {
           <li class="list-group-item">Bids: ${cardDetails._count.bids}</li>
         </ul>
         <div class="card-body">
-          <button type="button" class="btn" id="backBtn">Back to Auctions</button>
-          <button type="button" class="btn" id="bidBtn">Place your Bid</button>
+          <button type="button" class="btn" id="backBtn">Go back</button>
+          <button type="button" class="btn" id="bidBtn">Bid</button>
+          <button type="button" class="btn" id="editBtn">Edit</button>
+          <button type="button" class="btn" id="deleteBtn">Delete</button>
         </div>
       </div>
       `;

@@ -168,7 +168,7 @@
                 id="submitBtn1"
                 data-bs-dismiss="modal"
               >
-                Submit
+                Login
               </button>
             </div>
           </form>
@@ -267,6 +267,104 @@
     </div>
 
     <main>
+      <!-- ALBUM INTRO/CAROUSEL -->
+      <div id="carouselIntro" class="carousel slide border-bottom">
+        <div class="carousel-indicators">
+          <button
+            type="button"
+            data-bs-target="#carouselIntro"
+            data-bs-slide-to="0"
+            class="active"
+            aria-current="true"
+            aria-label="Slide 1"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#carouselIntro"
+            data-bs-slide-to="1"
+            aria-label="Slide 2"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#carouselIntro"
+            data-bs-slide-to="2"
+            aria-label="Slide 3"
+          ></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img
+              src="./img/karla-alexander-2ct89Ann_lk-unsplash(1).jpg"
+              class="d-block w-100"
+              alt="a classic car"
+            />
+            <div class="container">
+              <div class="carousel-caption">
+                <h2>Need a ride?</h2>
+                <h3 class="opacity-75">Give it a go. Check our auctions.</h3>
+                <p>
+                  <a class="btn btn-lg btn-primary" href="#">Sign up today</a>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img
+              src="./img/marc-a-sporys-NO8Sj4dKE8k-unsplash(4).jpg"
+              class="d-block w-100"
+              alt="Foot of a woman and a man"
+            />
+            <div class="container">
+              <div class="carousel-caption">
+                <h2>We only helped him to find the right shoes.</h2>
+                <h3 class="opacity-75">
+                  The rest is history. Check our auctions.
+                </h3>
+                <p>
+                  <a class="btn btn-lg btn-primary" href="#">Sign up today</a>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img
+              src="./img/simon-weisser-phS37wg8cQg-unsplash(1).jpg"
+              class="d-block w-100"
+              alt="An electric guitar"
+            />
+            <div class="container">
+              <div class="carousel-caption">
+                <h2>We won't teach you how to play guitar</h2>
+                <h3 class="opacity-75">
+                  But getting one is a good start. Check our auctions.
+                </h3>
+                <p>
+                  <a class="btn btn-lg btn-primary" href="#">Sign up today</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselIntro"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselIntro"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+
       <!-- PROFILE CARD -->
       <div class="container pt-5" id="contUsersCardBody">
         <!-- <div class="card mb-3 border rounded-4" id="usersCardBody">
@@ -480,113 +578,112 @@
         </div>
       </div> -->
       </div>
-    </main>
 
-    <!-- MODAL NEW AUCTION -->
-    <div
-      class="modal fade"
-      id="newAuctionModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h2 class="modal-title fs-5" id="exampleModalLabel">
-              Hi, what do you want to sell today?
-            </h2>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <form id="formPost">
-            <div class="modal-body">
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label"
-                  >Name of the object</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="exampleFormControlTextarea1"
-                />
-              </div>
-              <div class="mb-3">
-                <label for="exampleFormControlTextarea2" class="form-label"
-                  >Description</label
-                >
-                <textarea
-                  class="form-control"
-                  id="exampleFormControlTextarea2"
-                  rows="3"
-                ></textarea>
-              </div>
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label"
-                  >Media (you can use max. 3 photos)</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="exampleFormControlTextarea3"
-                />
-              </div>
-              <div class="mb-3">
-                <label for="exampleFormControlTextarea2" class="form-label"
-                  >Tags</label
-                >
-                <textarea
-                  class="form-control"
-                  id="exampleFormControlTextarea4"
-                  rows="1"
-                ></textarea>
-              </div>
-              <div class="mb-3">
-                <label for="exampleFormControlTextarea2" class="form-label"
-                  >Ends</label
-                >
-                <textarea
-                  class="form-control"
-                  id="exampleFormControlTextarea5"
-                  rows="1"
-                ></textarea>
-              </div>
-            </div>
-
-            <div class="modal-footer">
+      <!-- MODAL NEW AUCTION -->
+      <div
+        class="modal fade"
+        id="newAuctionModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title fs-5" id="exampleModalLabel">
+                Hi, what do you want to sell today?
+              </h3>
               <button
                 type="button"
-                class="btn btn-secondary"
+                class="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-              >
-                Close
-              </button>
-
-              <button
-                type="button"
-                class="btn btn-primary"
-                data-bs-dismiss="modal"
-                aria-label="Post"
-                id="postBtn"
-              >
-                Post
-              </button>
+              ></button>
             </div>
-          </form>
+            <form id="formNewListing">
+              <div class="modal-body">
+                <div class="mb-3">
+                  <label for="exampleFormControlInput1" class="form-label"
+                    >Name of the object</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlTextarea1"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="exampleFormControlTextarea2" class="form-label"
+                    >Description</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="exampleFormControlTextarea2"
+                    rows="3"
+                  ></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="exampleFormControlInput1" class="form-label"
+                    >Media (you can use max. 3 photos)</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlTextarea3"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="exampleFormControlTextarea2" class="form-label"
+                    >Tags</label
+                  >
+                  <input
+                    class="form-control"
+                    id="exampleFormControlTextarea4"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="exampleFormControlTextarea2" class="form-label"
+                    >Ends at</label
+                  >
+                  <input
+                    class="form-control"
+                    id="exampleFormControlTextarea5"
+                    value="31.12.2023"
+                  />
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
+                  Go back
+                </button>
+
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  data-bs-dismiss="modal"
+                  aria-label="Post"
+                  id="postBtn"
+                >
+                  Post
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </main>
 
     <!-- Footer -->
     <section>
       <div class="container">
         <footer
-          class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top"
+          class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-bottom"
         >
           <div class="col-md-4 d-flex align-items-center">
             <a
