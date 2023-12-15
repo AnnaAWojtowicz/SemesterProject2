@@ -17,6 +17,7 @@ import { getProfile } from "./src/js/api/profiles/read";
 import { newListing } from "./src/js/api/listings/listingNew";
 import { deleteListing } from "./src/js/api/listings/delete";
 import { updateMyAvatar } from "./src/js/api/profiles/updateAvatar";
+import { newBid } from "./src/js/api/listings/bid";
 
 let params = new URLSearchParams(window.location.search);
 let listingsId = params.get("listingsId");
@@ -25,6 +26,7 @@ let token = localStorage.getItem("accessToken");
 
 let containerHtmlCard = document.getElementById("singleCard");
 let containerHtmlCardDetails = document.getElementById("singleCardDetails");
+
 // if (listingsId !== null) {
 //     showAuctionsCardDetails(listingsId);
 //     console.log(listingsId);
@@ -360,14 +362,20 @@ async function showAuctionsCardDetails(id) {
             </div>
             <div class="carousel-inner rounded-top-4">
               <div class="carousel-item active">
-                <img src="${cardDetails.media[0]}" class="d-block w-100" alt="..." />
+                <img src="${
+                  cardDetails.media[0]
+                }" class="d-block w-100" alt="..." />
               </div>
               <div class="carousel-item">
-                <img src="${cardDetails.media[1]}" class="d-block w-100 carousel-img"
+                <img src="${
+                  cardDetails.media[1]
+                }" class="d-block w-100 carousel-img"
                   alt="..." />
               </div>
               <div class="carousel-item">
-                <img src="${cardDetails.media[2]}" class="d-block w-100 carousel-img" alt="..." />
+                <img src="${
+                  cardDetails.media[2]
+                }" class="d-block w-100 carousel-img" alt="..." />
               </div>
             </div>
             <button class="carousel-control-prev " type="button" data-bs-target="#carouselExampleIndicators"
@@ -390,17 +398,69 @@ async function showAuctionsCardDetails(id) {
           </p>
         </div>
         <ul class="list-group list-group-flush">
-        <li class="list-group-item details">Seller:  <a href="./index.html?profileName=${cardDetails.seller.name}">${cardDetails.seller.name}</a></li>
+        <li class="list-group-item details">Seller:  <a href="./index.html?profileName=${
+          cardDetails.seller.name
+        }">${cardDetails.seller.name}</a></li>
           <li class="list-group-item details">Tags:  ${cardDetails.tags}</li>
           <li class="list-group-item details">Auction ends at: ${formattedDateEnd} ${formattedTimeEnd}</li>
-          <li class="list-group-item details">Bids: ${cardDetails._count.bids}</li>
+          <li class="list-group-item details">Bids: ${
+            cardDetails._count.bids
+          }</li>
         </ul>
+
+        <div class="list-group" id="allBids">
+          ${bidsToHtml(cardDetails.bids)}
+        </div>
         <div class="card-body">
           <button type="button" class="btn btn-primary" id="backBtn">Go back</button>
-          <button type="button" class="btn btn-primary" id="bidBtn">Bid</button>
+          <button type="button" class="btn btn-primary" id="showBidsBtn">Show bids</button>
+          <button type="button" class="btn btn-primary" id="bidBtn" data-bs-toggle="modal" data-bs-target="#yourBidModal">Bid</button>
           <button type="button" class="btn btn-primary" id="editBtn">Edit</button>
           <button type="button" class="btn btn-primary" id="deleteBtn">Delete</button>
         </div>
       </div>
       `;
 }
+
+/**
+ * Shows all bids that has been made
+ * @param {} bids
+ * @returns
+ */
+function bidsToHtml(bids) {
+  bids.sort((a, b) => new Date(b.created) - new Date(a.created));
+  let bidsHtml = "";
+
+  for (let i = 0; i < bids.length; i++) {
+    let formattedDateBid = new Date(bids[i].created).toLocaleDateString();
+    let formattedTimeBid = new Date(bids[i].created).toLocaleTimeString();
+    bidsHtml += `
+        <div class="list-group-item list-group-item-action d-flex gap-3 py-3" >
+            <div class="d-flex gap-2 w-100 justify-content-between details">
+              <div>
+                <h6 class="mb-0">${bids[i].bidderName}</h6>
+                <p class="mb-0 opacity-75 details">${bids[i].amount}</p>
+              </div>
+              <small class="opacity-50 text-nowrap details">${formattedDateBid} ${formattedTimeBid}</small>
+            </div>
+          </div>`;
+  }
+  return bidsHtml;
+}
+
+document.getElementById("showBidsBtn").addEventListener("click", () => {
+  document.getElementById("allBids").style.display = "block";
+});
+
+/**
+ * Places bid
+ */
+document.getElementById("placeBid").addEventListener("click", async () => {
+  let bidInput = document.getElementById("inputUserBid").value;
+  try {
+    const bidResult = await newBid(token, listingsId, bidInput);
+    window.location.href = `./index.html?listingsId=${bidResult.id}`;
+  } catch (error) {
+    alert(error);
+  }
+});

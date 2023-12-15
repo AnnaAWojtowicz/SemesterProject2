@@ -1,6 +1,7 @@
 import { apiPath } from "../constants";
 
-export async function newBid(token, id, amount) {
+export async function newBid(token, id, amountBid) {
+  const amount = parseInt(amountBid);
   const response = await fetch(
     `${apiPath}/auction/listings/${id}/bids?_seller=true&_bids=true`,
     {

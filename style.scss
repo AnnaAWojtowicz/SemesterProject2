@@ -200,6 +200,14 @@ li {
   }
 }
 
+#allBids {
+  display: none;
+}
+
+.list-group {
+  border-radius: 0;
+}
+
 footer {
   i {
     color: $details;

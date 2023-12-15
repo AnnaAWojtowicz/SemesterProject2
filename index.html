@@ -243,6 +243,9 @@
                   minlength="8"
                   required
                 />
+                <div id="passwordlHelp" class="form-text details">
+                  Your password must be min. 8 characters long.
+                </div>
               </div>
               <div class="mb-3">
                 <label for="InputAvatar" class="form-label details"
@@ -350,6 +353,63 @@
       </div>
     </div>
 
+    <!-- MODAL PLACING A BID-->
+
+    <div class="modal fade" id="yourBidModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title details">
+              Hi, it seems you want to make a bid
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body details">
+            <div>You have ${your credits} credits</div>
+            <form
+              name="form"
+              id="formBid"
+              method="post"
+              class="needs-validation mt-2"
+            >
+              <div class="mb-3">
+                <label for="inputBid" class="form-label details"
+                  >Your bid</label
+                >
+                <input
+                  type="text"
+                  class="form-control details"
+                  id="inputUserBid"
+                  aria-describedby="input user's bid"
+                  required
+                />
+                <div id="bidInfo" class="form-text details">
+                  Remeber that you can place max. ${Your credits}.
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary" id="placeBid">
+                  Place your bid
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <main>
       <!-- ALBUM INTRO/CAROUSEL -->
       <div id="carouselIntro" class="carousel slide border-bottom">
@@ -387,7 +447,9 @@
                 <h2>Need a ride?</h2>
                 <h3 class="opacity-75">Give it a go. Check our auctions.</h3>
                 <p>
-                  <a class="btn btn-lg btn-primary" href="#">Sign up today</a>
+                  <button class="btn btn-lg btn-primary" href="#">
+                    Sign up today
+                  </button>
                 </p>
               </div>
             </div>
