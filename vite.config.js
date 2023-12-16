@@ -1,4 +1,4 @@
 // vite.config.js
 export default {
-  base: "/AnnaSemesterProject2/",
+  base: "/SemesterProject2/",
 };
