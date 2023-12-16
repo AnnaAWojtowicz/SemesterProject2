@@ -38,10 +38,15 @@ if (listingsId === null && profileName === null) {
   showAuctionsCards();
 }
 
-if (listingsId !== null) {
-  await showAuctionsCardDetails(listingsId);
-  addDeleteBtnEventListener();
-}
+/**
+ * Resolving top-level await issue in GitHub actions
+ */
+(async () => {
+  if (listingsId !== null) {
+    await showAuctionsCardDetails(listingsId);
+    addDeleteBtnEventListener();
+  }
+})();
 
 if (profileName !== null) {
   showUserProfile(profileName);
