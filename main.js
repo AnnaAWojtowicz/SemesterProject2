@@ -5,6 +5,8 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.js";
 import "./style.scss";
 
+import { Modal } from "bootstrap/dist/js/bootstrap.js";
+
 // import javascriptLogo from "./javascript.svg";
 // import viteLogo from "/vite.svg";
 // import { setupCounter } from "./counter.js";
@@ -19,6 +21,7 @@ import { deleteListing } from "./src/js/api/listings/delete";
 import { updateMyAvatar } from "./src/js/api/profiles/updateAvatar";
 import { newBid } from "./src/js/api/listings/bid";
 import { getMyBids } from "./src/js/api/profiles/bids";
+import { updateListing } from "./src/js/api/listings/update";
 
 let params = new URLSearchParams(window.location.search);
 let listingsId = params.get("listingsId");
@@ -28,6 +31,8 @@ let token = localStorage.getItem("accessToken");
 let containerHtmlCard = document.getElementById("singleCard");
 let containerHtmlCardDetails = document.getElementById("singleCardDetails");
 let myBidsHtml = document.getElementById("myBids");
+
+let listingIsEdited = false;
 
 // if (listingsId !== null) {
 //     showAuctionsCardDetails(listingsId);
@@ -161,9 +166,7 @@ document
  * https://getbootstrap.com/docs/5.2/components/modal/#events
  */
 const formNewListing = document.getElementById("formNewListing");
-// const newListingModal = document.getElementById("newAuctionModal");
 const newListingModalBtn = document.getElementById("postBtn");
-// newListingModal.addEventListener("hide.bs.modal", function (event) {
 newListingModalBtn.addEventListener("click", function (event) {
   const titleListing = formNewListing.elements[0];
   const endDateListing = formNewListing.elements[4];
@@ -182,7 +185,7 @@ newListingModalBtn.addEventListener("click", function (event) {
   if (!validateNewListingForm(inputs)) {
     event.preventDefault();
   } else {
-    createNewListing(inputs);
+    createOrUpdateListing(inputs);
   }
 });
 
@@ -198,16 +201,28 @@ const regexNewListing = {
  * Creates a new listing.
  * @param {Object} inputs - The inputs for the new listing.
  */
-async function createNewListing(inputs) {
+async function createOrUpdateListing(inputs) {
+  let result = undefined;
   try {
-    const result = await newListing(
-      token,
-      inputs.title,
-      convertInputDateToIsoDate(inputs.date),
-      inputs.description,
-      inputs.tags.split(","),
-      inputs.media.split(","),
-    );
+    if (listingIsEdited === true) {
+      result = await updateListing(
+        token,
+        listingsId,
+        inputs.title,
+        inputs.description,
+        inputs.tags.split(","),
+        inputs.media.split(","),
+      );
+    } else {
+      result = await newListing(
+        token,
+        inputs.title,
+        convertInputDateToIsoDate(inputs.date),
+        inputs.description,
+        inputs.tags.split(","),
+        inputs.media.split(","),
+      );
+    }
     window.location.href = `./index.html?listingsId=${result.id}`;
   } catch (error) {
     alert(error);
@@ -259,6 +274,23 @@ function convertInputDateToIsoDate(dateString) {
   let date = new Date(parts[2], parts[1] - 1, parts[0]);
 
   let formattedDate = date.toISOString();
+  return formattedDate;
+}
+
+/**
+ * Changes date from 2023-12-16T22:01:35.309Z
+ * to 16.12.2023
+ * @param {*} isoDateString
+ * @returns
+ */
+function convertIsoDateToInputDate(isoDateString) {
+  let date = new Date(isoDateString);
+
+  let day = String(date.getDate()).padStart(2, "0");
+  let month = String(date.getMonth() + 1).padStart(2, "0");
+  let year = date.getFullYear();
+
+  let formattedDate = `${day}.${month}.${year}`;
   return formattedDate;
 }
 
@@ -519,6 +551,8 @@ async function showAuctionsCardDetails(id) {
         </div>
       </div>
       `;
+
+  createEditBtnListenerAndEdit(cardDetails);
 }
 
 /**
@@ -561,5 +595,41 @@ document.getElementById("placeBid").addEventListener("click", async () => {
     window.location.href = `./index.html?listingsId=${bidResult.id}`;
   } catch (error) {
     alert(error);
+  }
+});
+
+/**
+ * Edit listing
+ */
+function createEditBtnListenerAndEdit(listing) {
+  document.getElementById("editBtn").addEventListener("click", () => {
+    const editListingModal = new Modal(
+      document.getElementById("newAuctionModal"),
+    );
+    editListingModal.show();
+
+    const titleListing = formNewListing.elements[0];
+    const endDateListing = formNewListing.elements[4];
+    const descriptionListing = formNewListing.elements[1];
+    const tagsListing = formNewListing.elements[3];
+    const mediaListing = formNewListing.elements[2];
+
+    titleListing.value = listing.title;
+    endDateListing.value = convertIsoDateToInputDate(listing.endsAt);
+    descriptionListing.value = listing.description;
+    tagsListing.value = listing.tags;
+    mediaListing.value = listing.media;
+
+    listingIsEdited = true;
+  });
+}
+
+/**
+ * Resotre listing is edited to false when modal is closed
+ */
+const newListingModal = document.getElementById("newAuctionModal");
+newListingModal.addEventListener("hide.bs.modal", function () {
+  if (listingIsEdited) {
+    listingIsEdited = false;
   }
 });
