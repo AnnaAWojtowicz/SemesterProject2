@@ -353,7 +353,7 @@
       </div>
     </div>
 
-    <!-- MODAL PLACING A BID-->
+    <!-- MODAL PLACING A BID-->
 
     <div class="modal fade" id="yourBidModal" tabindex="-1">
       <div class="modal-dialog">
@@ -511,7 +511,7 @@
         </button>
       </div>
 
-      <!-- PROFILE CARD -->
+      <!-- PROFILE CARD -->
       <div class="container pt-5" id="contUsersCardBody">
         <!-- <div class="card mb-3 border rounded-4" id="usersCardBody">
         <div class="row g-0">
@@ -746,7 +746,7 @@
                 aria-label="Close"
               ></button>
             </div>
-            <form id="formNewListing">
+            <form id="formNewListing" class="was-validated">
               <div class="modal-body">
                 <div class="mb-3">
                   <label for="exampleFormControlInput1" class="form-label"
@@ -756,6 +756,9 @@
                     type="text"
                     class="form-control"
                     id="exampleFormControlTextarea1"
+                    placeholder="What you want to sell?"
+                    pattern="^[A-Za-z\s]{0,29}$"
+                    required
                   />
                 </div>
                 <div class="mb-3">
@@ -766,6 +769,9 @@
                     class="form-control"
                     id="exampleFormControlTextarea2"
                     rows="3"
+                    placeholder="Describe your object"
+                    maxlength="500"
+                    required
                   ></textarea>
                 </div>
                 <div class="mb-3">
@@ -776,6 +782,9 @@
                     type="text"
                     class="form-control"
                     id="exampleFormControlTextarea3"
+                    placeholder="https://www.example.com/pic1.png, https://www.example.com/pic2.jpg, https://www.example.com/pic3.jpeg"
+                    pattern="^(https?:\/\/.*\.(?:png|jpg|jpeg))(,\s*https?:\/\/.*\.(?:png|jpg|jpeg)){0,2}$"
+                    required
                   />
                 </div>
                 <div class="mb-3">
@@ -785,6 +794,9 @@
                   <input
                     class="form-control"
                     id="exampleFormControlTextarea4"
+                    placeholder="vintage, red, exclusive, ..."
+                    pattern="^(\b\w+\b\s*(,\s*)?){1,10}$"
+                    required
                   />
                 </div>
                 <div class="mb-3">
@@ -795,6 +807,9 @@
                     class="form-control"
                     id="exampleFormControlTextarea5"
                     value="31.12.2023"
+                    placeholder="dd.mm.yyyy"
+                    pattern="^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.\d{4}$"
+                    required
                   />
                 </div>
               </div>
@@ -812,7 +827,6 @@
                 <button
                   type="button"
                   class="btn btn-primary"
-                  data-bs-dismiss="modal"
                   aria-label="Post"
                   id="postBtn"
                 >

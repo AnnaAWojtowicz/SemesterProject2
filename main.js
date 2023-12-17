@@ -153,32 +153,96 @@ document
 //}
 
 /**
- * Creates new listing
+ * Validates and creates new listing form when before modal closes
+ * https://getbootstrap.com/docs/5.2/components/modal/#events
  */
 const formNewListing = document.getElementById("formNewListing");
-document.getElementById("postBtn").addEventListener("click", async (event) => {
-  event.preventDefault();
+// const newListingModal = document.getElementById("newAuctionModal");
+const newListingModalBtn = document.getElementById("postBtn");
+// newListingModal.addEventListener("hide.bs.modal", function (event) {
+newListingModalBtn.addEventListener("click", function (event) {
   const titleListing = formNewListing.elements[0];
   const endDateListing = formNewListing.elements[4];
   const descriptionListing = formNewListing.elements[1];
   const tagsListing = formNewListing.elements[3];
   const mediaListing = formNewListing.elements[2];
 
-  const titleUserListing = titleListing.value;
-  const endDateUserListing = convertInputDateToIsoDate(endDateListing.value);
-  const descriptionUserListing = descriptionListing.value;
-  const tagsUserListing = tagsListing.value.split(",");
-  const mediaUserListing = mediaListing.value.split(",");
+  const inputs = {
+    title: titleListing.value,
+    description: descriptionListing.value,
+    tags: tagsListing.value,
+    media: mediaListing.value,
+    date: endDateListing.value,
+  };
 
-  await newListing(
-    token,
-    titleUserListing,
-    endDateUserListing,
-    descriptionUserListing,
-    tagsUserListing,
-    mediaUserListing,
-  );
+  if (!validateNewListingForm(inputs)) {
+    event.preventDefault();
+  } else {
+    createNewListing(inputs);
+  }
 });
+
+const regexNewListing = {
+  title: /^[A-Za-z\s]{0,29}$/,
+  media:
+    /^(https?:\/\/.*\.(?:png|jpg|jpeg))(,\s*https?:\/\/.*\.(?:png|jpg|jpeg)){0,2}$/,
+  tags: /^(\b\w+\b\s*(,\s*)?){1,10}$/,
+  date: /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.\d{4}$/,
+};
+
+/**
+ * Creates a new listing.
+ * @param {Object} inputs - The inputs for the new listing.
+ */
+async function createNewListing(inputs) {
+  try {
+    const result = await newListing(
+      token,
+      inputs.title,
+      convertInputDateToIsoDate(inputs.date),
+      inputs.description,
+      inputs.tags.split(","),
+      inputs.media.split(","),
+    );
+    window.location.href = `./index.html?listingsId=${result.id}`;
+  } catch (error) {
+    alert(error);
+  }
+}
+
+/**
+ * Validates the new listing form.
+ * @param {Object} inputs - The inputs object containing the form data.
+ * @returns {boolean} - Returns true if the form is valid, false otherwise.
+ */
+function validateNewListingForm(inputs) {
+  if (inputs.title === "" || !regexNewListing.title.test(inputs.title)) {
+    alert("Enter a title with max 30 characters");
+    return false;
+  }
+
+  if (inputs.description === "") {
+    alert("Description is required");
+    return false;
+  }
+
+  if (inputs.media === "" || !regexNewListing.media.test(inputs.media)) {
+    alert("Media is required");
+    return false;
+  }
+
+  if (inputs.tags === "" || !regexNewListing.tags.test(inputs.tags)) {
+    alert("Tags are required");
+    return false;
+  }
+
+  if (inputs.date === "" || !regexNewListing.date.test(inputs.date)) {
+    alert("Date is required and must be in format dd.mm.yyyy");
+    return false;
+  }
+
+  return true;
+}
 
 /**
  * Changes the date format to ISOdate
@@ -453,9 +517,9 @@ function bidsToHtml(bids) {
   return bidsHtml;
 }
 
-document.getElementById("showBidsBtn").addEventListener("click", () => {
-  document.getElementById("allBids").style.display = "block";
-});
+// document.getElementById("showBidsBtn").addEventListener("click", () => {
+//   document.getElementById("allBids").style.display = "block";
+// });
 
 /**
  * Places bid
