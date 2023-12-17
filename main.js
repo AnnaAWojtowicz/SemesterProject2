@@ -144,6 +144,8 @@ async function showUserProfile(name) {
 `;
   showUserCreditsHeader(profile);
   showUserListings(profile.listings);
+  // document.getElementById("myBidsContainer").innerHTML = "<p class='details mt-5 pt-5 subheader'>Your bids</p>";
+
   showUsersBids(myBids);
 }
 
@@ -326,7 +328,9 @@ function showUserListings(listings) {
 }
 
 function showUsersBids(bids) {
+  document.getElementById("myBidsHeader").style.display = "block";
   myBidsHtml.innerHTML = "";
+
   for (let i = 0; i < bids.length; i++) {
     let formattedDate = new Date(bids[i].created).toLocaleDateString();
     let formattedTime = new Date(bids[i].created).toLocaleTimeString();
