@@ -1,17 +1,12 @@
-// $primaryBackground: #f8f0e5;
+//variables
 $primaryBackground: #f7f4e4;
 $secondaryBackground: #cac0a8;
 $tertiaryBackground: #a79469;
-// $tertiaryBackground: #dac0a3;
-
-// $details: #102c57;
 $details: #0b384b;
 $secondaryDetail: #744815;
 
-$successActive: #2f440f;
-// $sucessInactive: #aec2a7;
-$failActive: #78081d;
-// $failInactive: #d35050;
+// $successActive: #2f440f;
+// $failActive: #78081d;
 
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400&family=Marcellus&display=swap");
 
@@ -75,6 +70,11 @@ header {
 h2 {
   font-size: 3rem;
   color: $primaryBackground !important;
+}
+
+.subheader {
+  font-size: 3rem;
+  font-family: "Marcellus", serif;
 }
 
 .form-control {

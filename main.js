@@ -33,6 +33,7 @@ let containerHtmlCardDetails = document.getElementById("singleCardDetails");
 let myBidsHtml = document.getElementById("myBids");
 
 let listingIsEdited = false;
+let allListings = [];
 
 // if (listingsId !== null) {
 //     showAuctionsCardDetails(listingsId);
@@ -117,7 +118,7 @@ async function showUserProfile(name) {
 
   let userCardContainer = document.getElementById("contUsersCardBody");
   userCardContainer.innerHTML = `
-<div class="card mb-3 border rounded-4" id="usersCardBody">
+<div class="card mb-3 border rounded-4" id="usersCardBody" style="max-width: 650px;">
         <div class="row g-0">
           <div class="col-md-4">
             <img src="${profile.avatar}" class="img-fluid" id="profileImg"
@@ -130,9 +131,6 @@ async function showUserProfile(name) {
               <button class="btn btn-primary my-4 me-2" type="submit" data-bs-toggle="modal" data-bs-target="#newAuctionModal">
                 New Auction
               </button>
-              <button class="btn btn-primary my-4 me-2" type="submit">
-                Your Bids
-              </button>
               <button class="btn btn-primary my-4 me-2" id="updateAvatarBtn" type="submit" data-bs-toggle="modal" data-bs-target="#updateModal">
                 Change Avatar
               </button>
@@ -140,6 +138,7 @@ async function showUserProfile(name) {
           </div>
         </div>
       </div>
+      <p class="details mt-5 pt-5 subheader">Your auctions</p>
 `;
   showUserCreditsHeader(profile);
   showUserListings(profile.listings);
@@ -162,7 +161,7 @@ document
 //}
 
 /**
- * Validates and creates new listing form when before modal closes
+ * Validates and creates new listing form before modal closes
  * https://getbootstrap.com/docs/5.2/components/modal/#events
  */
 const formNewListing = document.getElementById("formNewListing");
@@ -396,7 +395,7 @@ function showUserCreditsHeader(profile) {
         </ul>
 
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-          <input type="search" class="form-control" placeholder="Search..." aria-label="Search" />
+          <input type="search" class="form-control" placeholder="Search..." aria-label="Search" id="searchHeaderField"/>
         </form>
 
         <div class="dropdown text-end">
@@ -406,7 +405,6 @@ function showUserCreditsHeader(profile) {
           </a>
           <ul class="dropdown-menu text-small">
             <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#newAuctionModal">New Auction</a></li>
-            <li><a class="dropdown-item" href="#">Your Bids</a></li>
             <li><a class="dropdown-item" href="./index.html?profileName=${profile.name}">Your Profile</a></li>
             <li>
               <hr class="dropdown-divider" />
@@ -439,7 +437,37 @@ async function showAuctionsCards() {
   }
 
   document.getElementById("singleCardDetails").style.display = "none";
+
   const cards = await getListings();
+  allListings = cards;
+
+  containerHtmlCard.innerHTML = "";
+  for (let i = 0; i < cards.length; i++) {
+    let formattedDate = new Date(cards[i].updated).toLocaleDateString();
+    let formattedTime = new Date(cards[i].updated).toLocaleTimeString();
+
+    containerHtmlCard.innerHTML += `
+        <div class="col">
+        <div class="card border rounded-4" style="height: 450px">
+        <img src="${cards[i].media[0]}" class="card-img-top card-img" alt="..." style="height: 300px">
+        <div class="card-body cardBodyRounded d-flex-column align-items-start mb">
+          <h3 class="card-title details p-2">${cards[i].title}</h3>
+         <div class="mb-auto p-2">
+          <div class="d-flex justify-content-between align-items-center ">
+                <a href="?listingsId=${cards[i].id}" class=""><button type="button" class="btn aboutBtn btn-primary"
+                id="${cards[i].id}">About</button></a>
+                <small class="details ">${formattedDate} ${formattedTime}</small>
+              </div>
+              </div>
+        </div>
+      </div>
+        </div>
+  `;
+  }
+}
+
+function filterAuctionsCardsAfterSearch(cardsToShow = null) {
+  let cards = cardsToShow;
 
   containerHtmlCard.innerHTML = "";
   for (let i = 0; i < cards.length; i++) {
@@ -633,3 +661,65 @@ newListingModal.addEventListener("hide.bs.modal", function () {
     listingIsEdited = false;
   }
 });
+
+/**
+ * Search items
+ */
+function searchItems(itemsArray, searchString) {
+  let results = [];
+  for (let i = 0; i < itemsArray.length; i++) {
+    const element = itemsArray[i];
+
+    //Id
+    if (itemsArray[i].id.includes(searchString)) {
+      results.push(element);
+    }
+
+    //Title
+    if (itemsArray[i].title.includes(searchString)) {
+      results.push(element);
+    }
+
+    //Description
+    if (itemsArray[i].description.includes(searchString)) {
+      results.push(element);
+    }
+
+    //Tags
+    itemsArray[i].tags.forEach((tag) => {
+      if (tag.includes(searchString)) {
+        results.push(element);
+      }
+    });
+
+    //Created at
+    if (itemsArray[i].created.includes(searchString)) {
+      results.push(element);
+    }
+
+    //Updated at
+    if (itemsArray[i].updated.includes(searchString)) {
+      results.push(element);
+    }
+
+    //Ends at
+    if (itemsArray[i].endsAt.includes(searchString)) {
+      results.push(element);
+    }
+  }
+
+  return results;
+}
+
+document
+  .getElementById("searchHeaderField")
+  .addEventListener("input", (event) => {
+    let searchString = event.target.value;
+
+    if (searchString.length > 1) {
+      let results = searchItems(allListings, searchString);
+      filterAuctionsCardsAfterSearch(results);
+    } else {
+      filterAuctionsCardsAfterSearch(allListings);
+    }
+  });
