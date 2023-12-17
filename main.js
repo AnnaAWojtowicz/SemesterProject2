@@ -382,7 +382,7 @@ function showUserCreditsHeader(profile) {
   creditsContainer.innerHTML = `
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-center">
-        <a href="index.html"><img src="./img/logowinsLogo (1).png" aria-label="Wins logo" width="40" height="auto"
+        <a href="index.html"><img src="./img/logowinsLogo.png" aria-label="Wins logo" width="40" height="auto"
             class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none" /></a>
 
         <ul class="d-flex nav col-12 col-lg-auto me-lg-auto mb-2 align-items-baseline mb-md-0">
