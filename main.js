@@ -739,15 +739,30 @@ function searchItems(itemsArray, searchString) {
   return results;
 }
 
-document
-  .getElementById("searchHeaderField")
-  .addEventListener("input", (event) => {
-    let searchString = event.target.value;
+if (localStorage.getItem("accessToken") === null) {
+  document
+    .getElementById("searchHeaderField2")
+    .addEventListener("input", (event) => {
+      let searchString = event.target.value;
 
-    if (searchString.length > 1) {
-      let results = searchItems(allListings, searchString);
-      filterAuctionsCardsAfterSearch(results);
-    } else {
-      filterAuctionsCardsAfterSearch(allListings);
-    }
-  });
+      if (searchString.length > 1) {
+        let results = searchItems(allListings, searchString);
+        filterAuctionsCardsAfterSearch(results);
+      } else {
+        filterAuctionsCardsAfterSearch(allListings);
+      }
+    });
+} else {
+  document
+    .getElementById("searchHeaderField")
+    .addEventListener("input", (event) => {
+      let searchString = event.target.value;
+
+      if (searchString.length > 1) {
+        let results = searchItems(allListings, searchString);
+        filterAuctionsCardsAfterSearch(results);
+      } else {
+        filterAuctionsCardsAfterSearch(allListings);
+      }
+    });
+}
