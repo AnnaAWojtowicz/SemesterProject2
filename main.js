@@ -23,6 +23,8 @@ import { newBid } from "./src/js/api/listings/bid";
 import { getMyBids } from "./src/js/api/profiles/bids";
 import { updateListing } from "./src/js/api/listings/update";
 
+import logo from "./img/logowinsLogo.png";
+
 let params = new URLSearchParams(window.location.search);
 let listingsId = params.get("listingsId");
 let profileName = params.get("profileName");
@@ -382,7 +384,7 @@ function showUserCreditsHeader(profile) {
   creditsContainer.innerHTML = `
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-center">
-        <a href="index.html"><img src="./img/logowinsLogo.png" aria-label="Wins logo" width="40" height="auto"
+        <a href="index.html"><img src="${logo}" aria-label="Wins logo" width="40" height="auto"
             class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none" /></a>
 
         <ul class="d-flex nav col-12 col-lg-auto me-lg-auto mb-2 align-items-baseline mb-md-0">
@@ -412,6 +414,7 @@ function showUserCreditsHeader(profile) {
       </div>
     </div>
 `;
+
   document.getElementById("signOut").addEventListener("click", signOut);
   document.getElementById("searchHeaderField").style.display = "none";
 }
