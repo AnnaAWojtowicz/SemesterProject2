@@ -370,16 +370,13 @@ function addDeleteBtnEventListener() {
 }
 
 /**
- * Edits users auction
- */
-
-/**
  * Gets users data (credits in header when logged in
  */
 function showUserCreditsHeader(profile) {
   document.getElementById("header1").style.display = "block";
   document.getElementById("header2").style.display = "none";
   document.getElementById("carouselIntro").style.display = "none";
+
   let creditsContainer = document.getElementById("header1");
   creditsContainer.innerHTML = "";
   creditsContainer.innerHTML = `
@@ -416,6 +413,7 @@ function showUserCreditsHeader(profile) {
     </div>
 `;
   document.getElementById("signOut").addEventListener("click", signOut);
+  document.getElementById("searchHeaderField").style.display = "none";
 }
 
 /**
@@ -437,6 +435,10 @@ async function showAuctionsCards() {
   }
 
   document.getElementById("singleCardDetails").style.display = "none";
+
+  if (token !== null) {
+    document.getElementById("searchHeaderField").style.display = "block";
+  }
 
   const cards = await getListings();
   allListings = cards;
@@ -498,6 +500,17 @@ function filterAuctionsCardsAfterSearch(cardsToShow = null) {
  * Gets details of an auction and shows it as single card without a possibility to do the bid
  */
 async function showAuctionsCardDetails(id) {
+  if (token !== null) {
+    // User logged in
+    showUserCreditsHeader(JSON.parse(localStorage.getItem("profile")));
+    document.getElementById("searchHeaderField").style.display = "none";
+  } else {
+    //User not logged in
+    document.getElementById("header1").style.display = "none";
+    document.getElementById("header2").style.display = "block";
+    document.getElementById("searchHeaderField2").style.display = "none";
+  }
+
   document.getElementById("carouselIntro").style.display = "none";
   const cardDetails = await getListingById(id);
 
