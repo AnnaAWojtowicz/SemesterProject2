@@ -18,6 +18,7 @@ import { newListing } from "./src/js/api/listings/listingNew";
 import { deleteListing } from "./src/js/api/listings/delete";
 import { updateMyAvatar } from "./src/js/api/profiles/updateAvatar";
 import { newBid } from "./src/js/api/listings/bid";
+import { getMyBids } from "./src/js/api/profiles/bids";
 
 let params = new URLSearchParams(window.location.search);
 let listingsId = params.get("listingsId");
@@ -26,6 +27,7 @@ let token = localStorage.getItem("accessToken");
 
 let containerHtmlCard = document.getElementById("singleCard");
 let containerHtmlCardDetails = document.getElementById("singleCardDetails");
+let myBidsHtml = document.getElementById("myBids");
 
 // if (listingsId !== null) {
 //     showAuctionsCardDetails(listingsId);
@@ -105,6 +107,7 @@ document
  */
 async function showUserProfile(name) {
   const profile = await getProfile(token, name);
+  const myBids = await getMyBids(token, name);
   localStorage.setItem("profile", JSON.stringify(profile));
 
   let userCardContainer = document.getElementById("contUsersCardBody");
@@ -135,6 +138,7 @@ async function showUserProfile(name) {
 `;
   showUserCreditsHeader(profile);
   showUserListings(profile.listings);
+  showUsersBids(myBids);
 }
 
 /**
@@ -278,6 +282,32 @@ function showUserListings(listings) {
                         <div class="d-flex justify-content-between align-items-center ">
                             <a href="?listingsId=${listings[i].id}" class=""><button type="button" class="btn aboutBtn btn-primary"
                             id="${listings[i].id}">About</button></a>
+                            <small class="details ">${formattedDate} ${formattedTime}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  `;
+  }
+}
+
+function showUsersBids(bids) {
+  myBidsHtml.innerHTML = "";
+  for (let i = 0; i < bids.length; i++) {
+    let formattedDate = new Date(bids[i].created).toLocaleDateString();
+    let formattedTime = new Date(bids[i].created).toLocaleTimeString();
+
+    myBidsHtml.innerHTML += `
+        <div class="col">
+            <div class="card border rounded-4" style="height: 450px">
+                <img src="${bids[i].listing.media[0]}" class="card-img-top card-img" alt="..." style="height: 300px">
+                <div class="card-body cardBodyRounded d-flex-column align-items-start mb">
+                    <h3 class="card-title details p-2">${bids[i].listing.title}</h3>
+                    <div class="mb-auto p-2">
+                        <div class="d-flex justify-content-between align-items-center ">
+                            <a href="?listingsId=${bids[i].listing.id}" class=""><button type="button" class="btn aboutBtn btn-primary"
+                            id="${bids[i].listing.id}">About</button></a>
                             <small class="details ">${formattedDate} ${formattedTime}</small>
                         </div>
                     </div>
