@@ -589,9 +589,17 @@ async function showAuctionsCardDetails(id) {
         <div class="card-body">
           <button type="button" class="btn btn-primary" id="backBtn">Go back</button>
           <button type="button" class="btn btn-primary" id="showBidsBtn">Show bids</button>
-          <button type="button" class="btn btn-primary" id="bidBtn" data-bs-toggle="modal" data-bs-target="#yourBidModal">Bid</button>
-          <button type="button" class="btn btn-primary" id="editBtn">Edit</button>
-          <button type="button" class="btn btn-primary" id="deleteBtn">Delete</button>
+          ${
+            token !== null &&
+            cardDetails.seller.name !== localStorage.getItem("name")
+              ? '<button type="button" class="btn btn-primary" id="bidBtn" data-bs-toggle="modal" data-bs-target="#yourBidModal">Bid</button>'
+              : ""
+          }
+          ${
+            cardDetails.seller.name === localStorage.getItem("name")
+              ? '<button type="button" class="btn btn-primary" id="editBtn">Edit</button><button type="button" class="btn btn-primary" id="deleteBtn">Delete</button>'
+              : ""
+          }
         </div>
       </div>
       `;
