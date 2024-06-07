@@ -33,7 +33,7 @@ npm run dev
 
 ### Brief:
 
-Noroff (n.a.) Semester Project 2 brief. Retrieved 14.11.2023 from:
+Noroff (n.a.) Semester Project 2 brief. Retrieved 14.11.2023 from: https://content.noroff.dev/semester-project-2/brief.html.
 
 ### Websites:
 
